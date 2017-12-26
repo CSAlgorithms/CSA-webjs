@@ -4,11 +4,17 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var hbs = require('hbs');
 
+// Routes
 var index = require('./routes/index');
 var users = require('./routes/users');
 
+// Express app
 var app = express();
+
+// Template included parts
+hbs.registerPartials(path.join(__dirname, 'views'));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
