@@ -1,0 +1,68 @@
+<div class="card">
+    <div class="card-body">
+        <form>
+            <div class="form-group">
+                <label for="title">Question Title</label>
+                <input type="text" name="title" class="form-control" id="title" placeholder="Title">
+            </div>
+            <div class="form-group">
+                <label for="score">Score</label>
+                <select name ="score" class="form-control" id="score">
+                    <option>100</option>
+                    <option>200</option>
+                    <option>300</option>
+                    <option>400</option>
+                    <option>500</option>
+                    <option>600</option>
+                    <option>700</option>
+                    <option>800</option>
+                    <option>900</option>
+                    <option>1000</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" rows="10"></textarea>
+            </div>
+
+            <div class="card form-group">
+                <div class="card-header" role="tab">
+                    <h5 class="mb-0">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseJava" aria-expanded="false" aria-controls="collapseJava">Java</a>
+                    </h5>
+                </div>
+                <div id="collapseJava" class="collapse" role="tabpanel">
+                    <div class="card-block">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="memory">Memory limit</label>
+                                <input type="text" name="memory" class="form-control" id="memory" placeholder="Memory limit">
+                            </div>
+                            <div class="form-group">
+                                <label for="time">Time limit</label>
+                                <input type="text" name="time" class="form-control" id="time" placeholder="Time limit">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="output">Output file</label>
+                <input type="file" name="output" class="form-control-file" id="output" aria-describedby="fileHelp">
+                <small id="fileHelp" class="form-text text-muted">
+                    User's program output must exactly match this file's content
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="note">Note</label>
+                <input type="text" name="note" class="form-control" id="note" placeholder="Note">
+                <small id="fileHelp" class="form-text text-muted">
+                    The note will be highlighted on the question page
+                </small>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>

@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var hbs = require('hbs');
+var template = require('./helper/template');
 
 // Routes
 var index = require('./routes/index');
@@ -51,7 +52,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  template.render(res, 'error', 'Error');
 });
 
 module.exports = app;
