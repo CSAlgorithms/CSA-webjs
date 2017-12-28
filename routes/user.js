@@ -22,4 +22,9 @@ router.get('/register', function(req, res, next) {
     template.render(res, 'user/register', 'Register', { _path: path});
 });
 
+router.get('/profile', function(req, res, next) {
+    var path = [{name: 'User'},{name: 'My Profile'}];
+    template.render(res, 'user/profile', 'My Profile', { _path: path});
+});
+
 module.exports = router;
