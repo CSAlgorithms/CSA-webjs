@@ -27,4 +27,9 @@ router.get('/profile/:id(\\d+)', function(req, res, next) {
     template.render(res, 'user/profile', 'My Profile', { _path: path});
 });
 
+router.get('/edit/:id(\\d+)', function(req, res, next) {
+    var path = [{name: 'User'}, {name: 'Profile'},{name: 'Edit'}];
+    template.render(res, 'user/edit', 'Edit profile', { _path: path});
+});
+
 module.exports = router;
