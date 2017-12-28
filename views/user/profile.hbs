@@ -38,65 +38,41 @@
             </div>
         </div>
 
-        <div class="row">
-
-            <div class="col-12 row">
-                <div id="cal-heatmap"></div>
-            </div>
-            <script type="text/javascript">
-                var cal = new CalHeatMap();
-                cal.init({
-                    itemSelector: "#cal-heatmap",
-                    domain: "month",
-                    subDomain: "day",
-                    data: {
-                        946702811: 15,
-                        946813892: 25,
-                        947702813: 10
-                    },
-                    start: new Date(2000, 0),
-                    domainGutter: 5,
-                    itemName: "submitted question",
-                    cellSize: 11,
-                    range: 20,
-                    // previousSelector: "#prev-selector",
-                    // nextSelector: "#next-selector",
-                    legend: [1, 3, 5, 10]
-                });
-            </script>
+        <div class="col-12 row">
+            <div id="cal-heatmap"></div>
         </div>
 
-        <div class="col-12" style="margin-top: 20px;">
-            <div class="table-responsive">
-                <h4 class="card-title">Questions</h4>
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Earned</th>
-                        <th>Status</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Reverse a linked list</td>
-                        <td>0/121</td>
-                        <td><li title="Submitted" class="fa fa-question"></li></td>
-                        <td><a href="question/view/1">view</a></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Validate a binary tree</td>
-                        <td>151/151</td>
-                        <td><li title="Completed" class="fa fa-check"></li></td>
-                        <td><a href="question/view/2">view</a></td>
-                    </tr>
-                    </tbody>
-                </table>
+        <div class="row" style="margin-top: 20px">
+            <div class="col-12">
+                <h3 class="card-title">Activities</h3>
+                <ul class="list-group">
+                    <li class="list-group-item"><b>John</b> solved question #10 <span class="float-right small">10:50</span></li>
+                    <li class="list-group-item"><b>John</b> submitted question #10 <span class="float-right small">10:30</span></li>
+                    <li class="list-group-item"><b>John</b> submitted question #10 <span class="float-right small">1 day ago</span></li>
+                </ul>
             </div>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    var cal = new CalHeatMap();
+    cal.init({
+        itemSelector: "#cal-heatmap",
+        domain: "month",
+        subDomain: "day",
+        data: {
+            946702811: 15,
+            946813892: 25,
+            947702813: 10
+        },
+        start: new Date(2000, 0),
+        domainGutter: 5,
+        itemName: "submitted question",
+        cellSize: 11,
+        range: 20,
+        // previousSelector: "#prev-selector",
+        // nextSelector: "#next-selector",
+        legend: [1, 3, 5, 10]
+    });
+</script>
