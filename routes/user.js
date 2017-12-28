@@ -2,6 +2,11 @@ var express = require('express');
 var router = express.Router();
 var template = require('../helper/template');
 
+router.get('/', function(req, res, next) {
+    var path = [{name: 'User'},{name: 'List'}];
+    template.render(res, 'user/list', 'All users', { _path: path});
+});
+
 router.get('/leaderboard', function(req, res, next) {
     var path = [{name: 'User'},{name: 'Leaderboard'}];
     template.render(res, 'user/leaderboard', 'Leaderboard', { _path: path});
