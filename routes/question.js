@@ -12,4 +12,9 @@ router.get('/add', function(req, res, next) {
     template.render(res, 'question/add', 'Add question', { _path: path});
 });
 
+router.get('/edit/:id(\\d+)', function(req, res, next) {
+    var path = [{name: 'Question', url: '/question'},{name: 'Question'}, {name: 'Edit'}];
+    template.render(res, 'question/edit', 'Edit question', { _path: path});
+});
+
 module.exports = router;
