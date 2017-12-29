@@ -17,4 +17,9 @@ router.get('/edit/:id(\\d+)', function(req, res, next) {
     template.render(res, 'question/edit', 'Edit question', { _path: path});
 });
 
+router.get('/view/:id(\\d+)', function(req, res, next) {
+    var path = [{name: 'Question', url: '/question'},{name: 'Question'}, {name: 'View'}];
+    template.render(res, 'question/view', 'View question', { _path: path});
+});
+
 module.exports = router;
