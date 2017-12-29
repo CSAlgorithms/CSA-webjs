@@ -12,4 +12,9 @@ router.get('/add', function(req, res, next) {
     template.render(res, 'event/add', 'Add event', { _path: path});
 });
 
+router.get('/view/:id(\\d+)', function(req, res, next) {
+    var path = [{name: 'Event', url: '/event'},{name: 'Date'}, {name: 'View'}];
+    template.render(res, 'event/view', 'View event', { _path: path});
+});
+
 module.exports = router;
