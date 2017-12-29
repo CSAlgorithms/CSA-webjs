@@ -7,6 +7,11 @@ router.get('/', function(req, res, next) {
     template.render(res, 'user/list', 'All users', { _path: path});
 });
 
+router.get('/guest', function(req, res, next) {
+    var path = [{name: 'User'},{name: 'New guest'}];
+    template.render(res, 'user/guest', 'Create a guest user', { _path: path});
+});
+
 router.get('/leaderboard', function(req, res, next) {
     var path = [{name: 'User'},{name: 'Leaderboard'}];
     template.render(res, 'user/leaderboard', 'Leaderboard', { _path: path});
