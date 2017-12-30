@@ -32,7 +32,33 @@ router.get('/login', function(req, res, next) {
 
 router.get('/register', function(req, res, next) {
     var path = [{name: 'User'},{name: 'Register'}];
-    template.render(res, 'user/register', 'Register', { _path: path});
+    var data = {_path: path};
+    var errors = req.flash('errors');
+    var post = req.flash('post');
+    if(errors) {
+        data['errors'] = errors;
+    }
+    if(post) {
+        data['post'] = post[0];
+    }
+    template.render(res, 'user/register', 'Register', data);
+});
+
+router.post('/register', function (req, res) {
+    var body = _.pick(req.body, ['email', 'username', 'password', 'firstName', 'lastName']);
+    var user = new User(body);
+    user.save().then(function (doc) {
+        log.info('User ' + user.uid + ' added');
+        res.redirect('/user/profile/' + doc.username);
+    }).catch(function (reason) {
+        var messages = [];
+        for(var key in reason.errors) {
+            messages.push(reason.errors[key].message);
+        }
+        req.flash('errors', messages);
+        req.flash('post', req.body);
+        res.redirect('/user/register');
+    });
 });
 
 router.get('/profile/:id(\\d+)', function(req, res, next) {
@@ -43,16 +69,6 @@ router.get('/profile/:id(\\d+)', function(req, res, next) {
 router.get('/edit/:id(\\d+)', function(req, res, next) {
     var path = [{name: 'User'}, {name: 'Profile'},{name: 'Edit'}];
     template.render(res, 'user/edit', 'Edit profile', { _path: path});
-});
-
-router.post('/register', function (req, res) {
-    var body = _.pick(req.body, ['email', 'username', 'password', 'firstName', 'lastName']);
-    var user = new User(body);
-    user.save().then(function (doc) {
-        res.send(doc);
-    }).catch(function (reason) {
-        res.send(reason);
-    });
 });
 
 module.exports = router;

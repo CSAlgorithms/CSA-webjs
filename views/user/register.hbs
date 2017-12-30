@@ -1,3 +1,11 @@
+{{# if errors }}
+    <div class="alert alert-danger" role="alert">
+        {{# each errors }}
+            <div class="col-12">{{ this }}</div>
+        {{/each}}
+    </div>
+{{/if}}
+
     <div class="card card-register mx-auto mt-5">
         <div class="card-body">
             <form method="post">
@@ -5,11 +13,11 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <label for="firstName">First name</label>
-                            <input class="form-control" name="firstName" id="firstName" type="text" placeholder="Enter first name">
+                            <input value="{{post.firstName}}" class="form-control" name="firstName" id="firstName" type="text" placeholder="Enter first name">
                         </div>
                         <div class="col-md-6">
                             <label for="lastName">Last name</label>
-                            <input class="form-control" name="lastName" id="lastName" type="text" placeholder="Enter last name">
+                            <input value="{{post.lastName}}" class="form-control" name="lastName" id="lastName" type="text" placeholder="Enter last name">
                         </div>
                     </div>
                 </div>
@@ -17,11 +25,11 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <label for="email">Email address</label>
-                            <input class="form-control" name="email" id="email" type="email" placeholder="Enter email">
+                            <input value="{{post.email}}" class="form-control" name="email" id="email" type="text" placeholder="Enter email">
                         </div>
                         <div class="col-md-6">
                             <label for="username">Username</label>
-                            <input class="form-control" name="username" id="username" type="text" placeholder="Username">
+                            <input value="{{post.username}}" class="form-control" name="username" id="username" type="text" placeholder="Username">
                         </div>
                     </div>
                 </div>

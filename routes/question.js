@@ -21,7 +21,6 @@ router.get('/add', function(req, res, next) {
     if(post) {
         data['post'] = post[0];
     }
-    console.log(data);
     template.render(res, 'question/add', 'Add question', data);
 });
 
@@ -32,7 +31,6 @@ router.post('/add', function(req, res, next) {
         log.info('Question ' + doc.qid + ' added');
         res.redirect('/question');
     }).catch(function (reason) {
-        log.info('Question was not added: ' + reason);
         var messages = [];
         for(var key in reason.errors) {
             messages.push(reason.errors[key].message);

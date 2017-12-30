@@ -1,14 +1,22 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const autoIncrement = require('mongoose-auto-increment');
 
 var UserSchema = new mongoose.Schema({
+    uid: {
+        type: Number,
+        unique: true,
+        required: true
+    },
     email: {
         type: String,
         required: true,
         trim: true,
         unique: true,
         validate: {
-            validator: validator.isEmail,
+            validator: function (data) {
+                return validator.isEmail(data);
+            },
             message: '{VALUE} is not a valid email'
         }
     },
@@ -37,6 +45,13 @@ var UserSchema = new mongoose.Schema({
         required: true,
         minlength: 4
     }
+});
+
+UserSchema.plugin(autoIncrement.plugin, {
+    model: 'User',
+    field: 'uid',
+    startAt: 1,
+    incrementBy: 1
 });
 
 module.exports.User = mongoose.model('User', UserSchema);
