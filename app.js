@@ -5,7 +5,15 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var hbs = require('hbs');
+var _ = require('lodash');
 var template = require('./helper/template');
+
+// Load env variables
+var dotenv = require('dotenv').config();
+if(_.isUndefined(dotenv.parsed)) {
+    console.log('Error loading/parsing .env file');
+    process.exit(1);
+}
 
 // Routes
 var index = require('./routes/index');
