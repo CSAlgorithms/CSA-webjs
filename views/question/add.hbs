@@ -11,10 +11,11 @@
         <form method="post">
             <div class="form-group">
                 <label for="title">Question Title</label>
-                <input type="text" name="title" class="form-control" id="title" placeholder="Title">
+                <input value="{{post.title}}" type="text" name="title" class="form-control" id="title" placeholder="Title">
             </div>
             <div class="form-group">
                 <label for="score">Score</label>
+                <!--TODO Dynamically generate scores -->
                 <select name ="score" class="form-control" id="score">
                     <option>100</option>
                     <option>200</option>
@@ -30,7 +31,9 @@
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea name="description" class="form-control ckeditor" id="description" rows="10"></textarea>
+                <textarea name="description" class="form-control ckeditor" id="description" rows="10">
+                    {{post.description}}
+                </textarea>
             </div>
 
             <div class="card form-group">
@@ -57,7 +60,7 @@
 
             <div class="form-group">
                 <label for="output">Output file</label>
-                <input type="file" name="outputPath" class="form-control-file" id="output" aria-describedby="fileHelp">
+                <input type="file" value="{{post.outputPath}}" name="outputPath" class="form-control-file" id="output" aria-describedby="fileHelp">
                 <small id="fileHelp" class="form-text text-muted">
                     User's program output must exactly match this file's content
                 </small>
@@ -65,7 +68,7 @@
 
             <div class="form-group">
                 <label for="note">Note</label>
-                <input type="text" name="note" class="form-control" id="note" placeholder="Note">
+                <input type="text" value="{{post.note}}" name="note" class="form-control" id="note" placeholder="Note">
                 <small id="fileHelp" class="form-text text-muted">
                     The note will be highlighted on the question page
                 </small>

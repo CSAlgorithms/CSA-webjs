@@ -14,9 +14,14 @@ router.get('/add', function(req, res, next) {
     var path = [{name: 'Question', url: '/question'},{name: 'Add'}];
     var data = {_path: path};
     var errors = req.flash('errors');
+    var post = req.flash('post');
     if(errors) {
         data['errors'] = errors;
     }
+    if(post) {
+        data['post'] = post[0];
+    }
+    console.log(data);
     template.render(res, 'question/add', 'Add question', data);
 });
 
@@ -33,6 +38,7 @@ router.post('/add', function(req, res, next) {
             messages.push(reason.errors[key].message);
         }
         req.flash('errors', messages);
+        req.flash('post', req.body);
         res.redirect('/question/add');
     });
 })
