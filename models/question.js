@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
+var autoIncrement = require('mongoose-auto-increment');
 
 var QuestionSchema = new mongoose.Schema({
     qid: {
         type: Number,
-        unique: true
+        unique: true,
+        required: true
     },
     title: {
         type: String,
@@ -24,6 +26,13 @@ var QuestionSchema = new mongoose.Schema({
     note: {
         type: String
     }
+});
+
+QuestionSchema.plugin(autoIncrement.plugin, {
+    model: 'Question',
+    field: 'qid',
+    startAt: 1,
+    incrementBy: 1
 });
 
 module.exports.Question = mongoose.model('Question', QuestionSchema);

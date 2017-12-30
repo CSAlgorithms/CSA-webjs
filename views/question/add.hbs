@@ -1,6 +1,14 @@
+{{# if errors }}
+    <div class="alert alert-danger" role="alert">
+        {{# each errors }}
+            <div class="col-12">{{ this }}</div>
+        {{/each}}
+    </div>
+{{/if}}
+
 <div class="card">
     <div class="card-body">
-        <form>
+        <form method="post">
             <div class="form-group">
                 <label for="title">Question Title</label>
                 <input type="text" name="title" class="form-control" id="title" placeholder="Title">
@@ -22,7 +30,7 @@
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea class="form-control ckeditor" id="description" rows="10"></textarea>
+                <textarea name="description" class="form-control ckeditor" id="description" rows="10"></textarea>
             </div>
 
             <div class="card form-group">
@@ -49,7 +57,7 @@
 
             <div class="form-group">
                 <label for="output">Output file</label>
-                <input type="file" name="output" class="form-control-file" id="output" aria-describedby="fileHelp">
+                <input type="file" name="outputPath" class="form-control-file" id="output" aria-describedby="fileHelp">
                 <small id="fileHelp" class="form-text text-muted">
                     User's program output must exactly match this file's content
                 </small>

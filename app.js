@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 var hbs = require('hbs');
 var _ = require('lodash');
 var template = require('./helper/template');
+var flash = require('connect-flash');
+var session = require('express-session');
 
 // Load env variables
 var dotenv = require('dotenv').config();
@@ -44,7 +46,13 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+    cookie: { maxAge: 60000 },
+    resave: true,
+    saveUninitialized: true,
+    secret: process.env.COOKIE_SECRET}));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash());
 
 // Register routes
 app.use('/', index);
