@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var template = require('../helper/template');
+var User = require('../models/user').User;
+var _ = require('lodash');
 
 router.get('/', function(req, res, next) {
     var path = [{name: 'User'},{name: 'List'}];
@@ -40,6 +42,16 @@ router.get('/profile/:id(\\d+)', function(req, res, next) {
 router.get('/edit/:id(\\d+)', function(req, res, next) {
     var path = [{name: 'User'}, {name: 'Profile'},{name: 'Edit'}];
     template.render(res, 'user/edit', 'Edit profile', { _path: path});
+});
+
+router.post('/register', function (req, res) {
+    var body = _.pick(req.body, ['email', 'username', 'password', 'firstName', 'lastName']);
+    var user = new User(body);
+    user.save().then(function (doc) {
+        res.send(doc);
+    }).catch(function (reason) {
+        res.send(reason);
+    });
 });
 
 module.exports = router;

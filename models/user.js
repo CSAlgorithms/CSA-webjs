@@ -1,15 +1,11 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-// const jwt = require('jsonwebtoken');
-const _ = require('lodash');
-// const bcrypt = require('bcryptjs');
 
 var UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
         trim: true,
-        minlength: 1,
         unique: true,
         validate: {
             validator: validator.isEmail,
@@ -19,25 +15,16 @@ var UserSchema = new mongoose.Schema({
     firstName: {
         type: String,
         trim: true,
-        required: false,
-        validate: {
-            validator: validator.isAlphanumeric,
-            message: '{VALUE} is not a valid first name'
-        }
+        required: false
     },
     lastName: {
         type: String,
         trim: true,
-        required: false,
-        validate: {
-            validator: validator.isAlphanumeric,
-            message: '{VALUE} is not a valid last name'
-        }
+        required: false
     },
     username: {
         type: String,
         required: true,
-        trim: true,
         minlength: 4,
         unique: true,
         validate: {
@@ -48,12 +35,8 @@ var UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        minlength: 6
-    },
-    tokens: [{
-        access: {
-            type: String,
-            required: true
-        }
-    }]
+        minlength: 4
+    }
 });
+
+module.exports.User = mongoose.model('User', UserSchema);

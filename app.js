@@ -15,6 +15,9 @@ if(_.isUndefined(dotenv.parsed)) {
     process.exit(1);
 }
 
+// Connect to DB
+require('./config/db/mongoose');
+
 // Routes
 var index = require('./routes/index');
 var user = require('./routes/user');
