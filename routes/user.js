@@ -3,6 +3,7 @@ var router = express.Router();
 var template = require('../helper/template');
 var User = require('../models/user').User;
 var _ = require('lodash');
+var log = require('winston');
 
 router.get('/', function(req, res, next) {
     var path = [{name: 'User'},{name: 'List'}];

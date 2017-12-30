@@ -15,8 +15,11 @@ if(_.isUndefined(dotenv.parsed)) {
     process.exit(1);
 }
 
-// Connect to DB
-require('./config/db/mongoose');
+// Configure db
+require('./config/mongoose');
+
+// Configure logger
+require('./config/winston');
 
 // Routes
 var index = require('./routes/index');
