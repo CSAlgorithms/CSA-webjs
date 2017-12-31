@@ -7,7 +7,11 @@ var _ = require('lodash');
 
 router.get('/', function(req, res, next) {
     var path = [{name: 'Question', url: '/question'},{name: 'List'}];
-    template.render(res, 'question/list', 'All questions', { _path: path});
+    var data = {_path: path};
+    Question.find({}).then(function (questions) {
+        data.questions = questions;
+        template.render(res, 'question/list', 'All questions', data);
+    });
 });
 
 router.get('/add', function(req, res, next) {
