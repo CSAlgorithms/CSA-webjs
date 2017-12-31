@@ -18,14 +18,10 @@
     <script type="text/javascript" src="/js/datepicker/bootstrap-datetimepicker.min.js"></script>
     <script>
         // DataTable
-        $(".dataTable").each(function () {
-            $(this).DataTable();
-        });
+        $(".dataTable").DataTable();
 
         // CKEditor
-        $(".ckeditor").each(function () {
-            CKEDITOR.replace( this.id);
-        });
+        CKEDITOR.replace('.ckeditor');
 
         // Datetime picker
         $('.form_datetime').datetimepicker({

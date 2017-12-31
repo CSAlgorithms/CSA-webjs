@@ -50,7 +50,12 @@ router.get('/edit/:id(\\d+)', function(req, res, next) {
 
 router.get('/view/:id(\\d+)', function(req, res, next) {
     req.data['_path'] = [{name: 'Question', url: '/question'},{name: 'Question'}, {name: 'View'}];
-    template.render(req, res, 'question/view', 'View question');
+    Question.findOne({qid: req.params.id}).then(function(question) {
+        if(!_.isNull(question)) {
+            req.data.question = question;
+            template.render(req, res, 'question/view', 'View question');
+        } else {}
+    });
 });
 
 module.exports = router;
