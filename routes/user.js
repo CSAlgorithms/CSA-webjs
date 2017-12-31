@@ -67,7 +67,14 @@ router.post('/register', function (req, res) {
 
 router.get('/profile/:id(\\d+)', function(req, res, next) {
     var path = [{name: 'User'},{name: 'My Profile'}];
-    template.render(res, 'user/profile', 'My Profile', { _path: path});
+    var data = {_path: path};
+    User.findOne({uid: req.params.id}).then(function (user) {
+        data.user = user;
+        if(!_.isEmpty(user.firstName) || !_.isEmpty(user.lastName)) {
+            data.user.fullname = (user.firstName + ' ' + user.lastName).trim();
+        }
+        template.render(res, 'user/profile', 'My Profile', data);
+    });
 });
 
 router.get('/edit/:id(\\d+)', function(req, res, next) {
