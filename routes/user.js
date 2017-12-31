@@ -7,7 +7,11 @@ var log = require('winston');
 
 router.get('/', function(req, res, next) {
     var path = [{name: 'User'},{name: 'List'}];
-    template.render(res, 'user/list', 'All users', { _path: path});
+    var data = { _path: path};
+    User.find({}).then(function(users) {
+        data.users = users;
+        template.render(res, 'user/list', 'All users', data);
+    });
 });
 
 router.get('/guest', function(req, res, next) {

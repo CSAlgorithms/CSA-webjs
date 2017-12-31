@@ -10,16 +10,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>first_user</td>
-                    <td><a href="/user/profile/1">view</a></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>second_user</td>
-                    <td><a href="/user/profile/2">view</a></td>
-                </tr>
+                {{# each users}}
+                    <tr>
+                        <td>{{this.uid}}</td>
+                        <td>{{this.username}}</td>
+                        <td><a href="/user/profile/{{this.uid}}">view</a></td>
+                    </tr>
+                {{/each}}
                 </tbody>
             </table>
         </div>
