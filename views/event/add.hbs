@@ -10,31 +10,33 @@
         <form method="post">
             <div class="form-group">
                 <label for="title">Event Title</label>
-                <input type="text" name="title" class="form-control" id="title" placeholder="Enter event title">
+                <input type="text" name="title" class="form-control" id="title" value="{{post.title}}" placeholder="Enter event title">
             </div>
 
             <div class="form-group">
                 <label for="description">Description</label>
-                <input type="text" name="description" class="form-control ckeditor" id="description" placeholder="Enter event description">
+                <textarea type="text" name="description" class="form-control ckeditor" id="description">
+                    {{post.description}}
+                </textarea>
             </div>
 
             <div class="form-group">
                 <div class="row">
                     <div class="col-6">
                         <label for="startAt" class="col-md-12 control-label">Start at</label>
-                        <div class="input-group date form_datetime col-md-8" data-date-format="dd MM yyyy - HH:ii p" data-link-field="startAt">
-                            <input class="form-control" size="16" type="text" value="" readonly>
+                        <div class="input-group date form_datetime col-md-8" data-date-format="yyyy-mm-ddThh:mm:ss" data-link-field="startAt">
+                            <input class="form-control" size="16" type="text" value="{{post.startAt}}" readonly>
                             <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                         </div>
-                        <input type="hidden" id="startAt" value="" /><br/>
+                        <input type="hidden" name="startAt" id="startAt" value="{{post.startAt}}" /><br/>
                     </div>
                     <div class="col-6">
                         <label for="endAt" class="col-md-12 control-label">Start at</label>
-                        <div class="input-group date form_datetime col-md-8" data-date-format="dd MM yyyy - HH:ii p" data-link-field="endAt">
-                            <input class="form-control" size="16" type="text" value="" readonly>
+                        <div class="input-group date form_datetime col-md-8" data-date-format="yyyy-mm-ddThh:mm:ss" data-link-field="endAt">
+                            <input class="form-control" size="16" type="text" value="{{post.endAt}}" readonly>
                             <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                         </div>
-                        <input type="hidden" id="endAt" value="" /><br/>
+                        <input type="hidden" name="endAt" id="endAt" value="{{post.endAt}}" /><br/>
                     </div>
                 </div>
             </div>
