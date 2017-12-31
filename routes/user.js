@@ -6,46 +6,44 @@ var _ = require('lodash');
 var log = require('winston');
 
 router.get('/', function(req, res, next) {
-    var path = [{name: 'User'},{name: 'List'}];
-    var data = { _path: path};
+    req.data['_path'] = [{name: 'User'},{name: 'List'}];
     User.find({}).then(function(users) {
-        data.users = users;
-        template.render(res, 'user/list', 'All users', data);
+        req.data.users = users;
+        template.render(req, res, 'user/list', 'All users');
     });
 });
 
 router.get('/guest', function(req, res, next) {
-    var path = [{name: 'User'},{name: 'New guest'}];
-    template.render(res, 'user/guest', 'Create a guest user', { _path: path});
+    req.data['_path'] = [{name: 'User'},{name: 'New guest'}];
+    template.render(req, res, 'user/guest', 'Create a guest user');
 });
 
 router.get('/leaderboard', function(req, res, next) {
-    var path = [{name: 'User'},{name: 'Leaderboard'}];
-    template.render(res, 'user/leaderboard', 'Leaderboard', { _path: path});
+    req.data['_path'] = [{name: 'User'},{name: 'Leaderboard'}];
+    template.render(req, res, 'user/leaderboard', 'Leaderboard');
 });
 
 router.get('/reset', function(req, res, next) {
-    var path = [{name: 'User'},{name: 'Forgot password'}];
-    template.render(res, 'user/reset', 'Forgot password', { _path: path});
+    req.data['_path'] = [{name: 'User'},{name: 'Forgot password'}];
+    template.render(req, res, 'user/reset', 'Forgot password');
 });
 
 router.get('/login', function(req, res, next) {
-    var path = [{name: 'User'},{name: 'Login'}];
-    template.render(res, 'user/login', 'Login', { _path: path});
+    req.data['_path'] = [{name: 'User'},{name: 'Login'}];
+    template.render(req, res, 'user/login', 'Login');
 });
 
 router.get('/register', function(req, res, next) {
-    var path = [{name: 'User'},{name: 'Register'}];
-    var data = {_path: path};
+    req.data['_path'] = [{name: 'User'},{name: 'Register'}];
     var errors = req.flash('errors');
     var post = req.flash('post');
     if(errors) {
-        data['errors'] = errors;
+        req.data['errors'] = errors;
     }
     if(post) {
-        data['post'] = post[0];
+        req.data['post'] = post[0];
     }
-    template.render(res, 'user/register', 'Register', data);
+    template.render(req, res, 'user/register', 'Register');
 });
 
 router.post('/register', function (req, res) {
@@ -66,20 +64,23 @@ router.post('/register', function (req, res) {
 });
 
 router.get('/profile/:id(\\d+)', function(req, res, next) {
-    var path = [{name: 'User'},{name: 'My Profile'}];
-    var data = {_path: path};
     User.findOne({uid: req.params.id}).then(function (user) {
-        data.user = user;
-        if(!_.isEmpty(user.firstName) || !_.isEmpty(user.lastName)) {
-            data.user.fullname = (user.firstName + ' ' + user.lastName).trim();
+        if(!_.isNull(user)) {
+            req.data['user'] = user;
+            req.data['_path'] = [{name: 'User'}, {name: user.username}];
+            if(!_.isEmpty(user.firstName) || !_.isEmpty(user.lastName)) {
+                req.data.user.fullname = (user.firstName + ' ' + user.lastName).trim();
+            }
+            template.render(req, res, 'user/profile', 'My Profile');
+        } else {
+            template.show404(req, res, 'Profile not found')
         }
-        template.render(res, 'user/profile', 'My Profile', data);
     });
 });
 
 router.get('/edit/:id(\\d+)', function(req, res, next) {
-    var path = [{name: 'User'}, {name: 'Profile'},{name: 'Edit'}];
-    template.render(res, 'user/edit', 'Edit profile', { _path: path});
+    req.data['_path'] = [{name: 'User'}, {name: 'Profile'},{name: 'Edit'}];
+    template.render(req, res, 'user/edit', 'Edit profile');
 });
 
 module.exports = router;

@@ -6,21 +6,20 @@ var _ = require('lodash');
 var log = require('winston');
 
 router.get('/config', function(req, res, next) {
-    var path = [{name: 'Admin', url: '/admin'},{name: 'Configuration'}];
-    var data = {_path: path};
+    req.data['_path'] = [{name: 'Admin', url: '/admin'},{name: 'Configuration'}];
     var errors = req.flash('errors');
     var post = req.flash('post');
     var success = req.flash('success');
     if(errors) {
-        data['errors'] = errors;
+        req.data['errors'] = errors;
     }
     if(post) {
-        data['post'] = post[0];
+        req.data['post'] = post[0];
     }
     if(success) {
-        data['success'] = success[0];
+        req.data['success'] = success[0];
     }
-    template.render(res, 'admin/config', 'Website configuration', data);
+    template.render(req, res, 'admin/config', 'Website configuration');
 });
 
 router.post('/config', function(req, res, next) {
@@ -42,8 +41,8 @@ router.post('/config', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-    var path = [{name: 'Admin', url: '/admin'},{name: 'Home'}];
-    template.render(res, 'admin/home', 'Admin panel', { _path: path});
+    req.data['_path'] = [{name: 'Admin', url: '/admin'},{name: 'Home'}];
+    template.render(req, res, 'admin/home', 'Admin panel');
 });
 
 module.exports = router;

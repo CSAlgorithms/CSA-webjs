@@ -1,28 +1,33 @@
 const _ = require('lodash');
 
-function render(res, page, title, data) {
+function render(req, res, page, title) {
 
     // Required arguments
-    if(_.isUndefined(res) || _.isUndefined(page) || _.isUndefined(title)) {
+    if(_.isUndefined(res) || _.isUndefined(page) || _.isUndefined(title) || _.isUndefined(req)) {
         throw new Error("Render call is missing required arguments");
     }
 
-    // If data is undefined, then create it
-    if(_.isUndefined(data)) {
-        data = {};
-    }
-
-    // Check if data is an object
-    if(!_.isObject(data)) {
-        throw new Error('data must be an object');
-    }
-
     // Adjust data object
-    data.main_page = page;
-    data.main_title = title;
+    req.data.main_page = page;
+    req.data.main_title = title;
 
     // Render file
-    res.render('index', data);
+    res.render('index', req.data);
+}
+
+function show404(req, res, title) {
+
+    // Required arguments
+    if(_.isUndefined(res) || _.isUndefined(title) || _.isUndefined(req)) {
+        throw new Error("show404 call is missing required arguments");
+    }
+
+    // Configure 404
+    res.status(404);
+    req.data.message = title;
+    req.data.error = {status: 404};
+    render(req, res, 'error', title);
 }
 
 module.exports.render = render;
+module.exports.show404 = show404;

@@ -6,26 +6,24 @@ var log = require('winston');
 var _ = require('lodash');
 
 router.get('/', function(req, res, next) {
-    var path = [{name: 'Question', url: '/question'},{name: 'List'}];
-    var data = {_path: path};
+    req.data['_path'] = [{name: 'Question', url: '/question'},{name: 'List'}];
     Question.find({}).then(function (questions) {
-        data.questions = questions;
-        template.render(res, 'question/list', 'All questions', data);
+        req.data['questions'] = questions;
+        template.render(req, res, 'question/list', 'All questions');
     });
 });
 
 router.get('/add', function(req, res, next) {
-    var path = [{name: 'Question', url: '/question'},{name: 'Add'}];
-    var data = {_path: path};
+    req.data['_path'] = [{name: 'Question', url: '/question'},{name: 'Add'}];
     var errors = req.flash('errors');
     var post = req.flash('post');
     if(errors) {
-        data['errors'] = errors;
+        req.data['errors'] = errors;
     }
     if(post) {
-        data['post'] = post[0];
+        req.data['post'] = post[0];
     }
-    template.render(res, 'question/add', 'Add question', data);
+    template.render(req, res, 'question/add', 'Add question');
 });
 
 router.post('/add', function(req, res, next) {
@@ -46,13 +44,13 @@ router.post('/add', function(req, res, next) {
 })
 
 router.get('/edit/:id(\\d+)', function(req, res, next) {
-    var path = [{name: 'Question', url: '/question'},{name: 'Question'}, {name: 'Edit'}];
-    template.render(res, 'question/edit', 'Edit question', { _path: path});
+    req.data['_path'] = [{name: 'Question', url: '/question'},{name: 'Question'}, {name: 'Edit'}];
+    template.render(req, res, 'question/edit', 'Edit question');
 });
 
 router.get('/view/:id(\\d+)', function(req, res, next) {
-    var path = [{name: 'Question', url: '/question'},{name: 'Question'}, {name: 'View'}];
-    template.render(res, 'question/view', 'View question', { _path: path});
+    req.data['_path'] = [{name: 'Question', url: '/question'},{name: 'Question'}, {name: 'View'}];
+    template.render(req, res, 'question/view', 'View question');
 });
 
 module.exports = router;

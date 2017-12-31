@@ -3,23 +3,23 @@ var router = express.Router();
 var template = require('../helper/template');
 
 router.get('/', function(req, res, next) {
-    var path = [{name: 'Event', url: '/event'},{name: 'List'}];
-    template.render(res, 'event/list', 'All events', { _path: path});
+    req.data['_path'] = [{name: 'Event', url: '/event'},{name: 'List'}];
+    template.render(req, res, 'event/list', 'All events');
 });
 
 router.get('/add', function(req, res, next) {
-    var path = [{name: 'Event', url: '/event'},{name: 'Add'}];
-    template.render(res, 'event/add', 'Add event', { _path: path});
+    req.data['_path'] = [{name: 'Event', url: '/event'},{name: 'Add'}];
+    template.render(req, res, 'event/add', 'Add event');
 });
 
 router.get('/edit/:id(\\d+)', function(req, res, next) {
-    var path = [{name: 'Event', url: '/event'},{name: 'Event title'}, {name: 'Edit'}];
-    template.render(res, 'event/edit', 'Edit event', { _path: path});
+    req.data['_path'] = [{name: 'Event', url: '/event'},{name: 'Event title'}, {name: 'Edit'}];
+    template.render(req, res, 'event/edit', 'Edit event');
 });
 
 router.get('/view/:id(\\d+)', function(req, res, next) {
-    var path = [{name: 'Event', url: '/event'},{name: 'Date'}, {name: 'View'}];
-    template.render(res, 'event/view', 'View event', { _path: path});
+    req.data['_path'] = [{name: 'Event', url: '/event'},{name: 'Date'}, {name: 'View'}];
+    template.render(req, res, 'event/view', 'View event');
 });
 
 module.exports = router;
