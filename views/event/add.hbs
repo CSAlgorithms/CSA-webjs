@@ -24,16 +24,16 @@
                 <div class="row">
                     <div class="col-6">
                         <label for="startAt" class="col-md-12 control-label">Start at</label>
-                        <div class="input-group date form_datetime col-md-8" data-date-format="yyyy-mm-ddThh:mm:ss" data-link-field="startAt">
-                            <input class="form-control" size="16" type="text" value="{{post.startAt}}" readonly>
+                        <div class="input-group date form_datetime col-md-8" data-date-format="yyyy-mm-ddThh:ii:00" data-link-field="startAt">
+                            <input class="form-control" size="16" type="text" value="{{post.startAt}}">
                             <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                         </div>
                         <input type="hidden" name="startAt" id="startAt" value="{{post.startAt}}" /><br/>
                     </div>
                     <div class="col-6">
-                        <label for="endAt" class="col-md-12 control-label">Start at</label>
-                        <div class="input-group date form_datetime col-md-8" data-date-format="yyyy-mm-ddThh:mm:ss" data-link-field="endAt">
-                            <input class="form-control" size="16" type="text" value="{{post.endAt}}" readonly>
+                        <label for="endAt" class="col-md-12 control-label">End at</label>
+                        <div class="input-group date form_datetime col-md-8" data-date-format="yyyy-MM-ddThh:ii:00" data-link-field="endAt">
+                            <input class="form-control" size="16" type="text" value="{{post.endAt}}">
                             <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                         </div>
                         <input type="hidden" name="endAt" id="endAt" value="{{post.endAt}}" /><br/>
