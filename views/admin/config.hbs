@@ -1,22 +1,35 @@
+{{# if success }}
+    <div class="alert alert-success" role="alert">{{success}}</div>
+{{/if}}
+
+{{# if errors }}
+    <div class="alert alert-danger" role="alert">
+        {{# each errors }}
+            <div class="col-12">{{ this }}</div>
+        {{/each}}
+    </div>
+{{/if}}
+
 <div class="card">
     <div class="card-body">
         <form method="post">
             <div class="form-group">
                 <label for="title">Website name</label>
-                <input type="text" name="title" class="form-control" id="title" placeholder="Enter website name">
+                <input type="text" value="{{post.webName}}" name="webName" class="form-control" id="title" placeholder="Enter website name">
             </div>
 
             <div class="form-group">
                 <label for="title">Contact email</label>
-                <input type="text" name="title" class="form-control" id="title" placeholder="Enter email">
+                <input type="text" value="{{post.contactEmail}}" name="contactEmail" class="form-control" id="title" placeholder="Enter email">
                 <small id="fileHelp" class="form-text text-muted">
                     Entered email will be displayed on password reset page
                 </small>
             </div>
 
             <div class="form-group">
-                <label for="note">System notification</label>
-                <input type="text" name="note" class="form-control" id="note" placeholder="System notification">
+                <label for="notification">System notification</label>
+                <input type="text" value="{{post.notification}}" name="notification" class="form-control" id="notification"
+                       placeholder="System notification">
                 <small id="fileHelp" class="form-text text-muted">
                     All website visitors will see this message
                 </small>
