@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
+var _ = require('lodash');
 
 var EventSchema = new mongoose.Schema({
     eid: {
@@ -21,7 +22,18 @@ var EventSchema = new mongoose.Schema({
     },
     endAt: {
         type: Date,
-        required: true
+        required: true,
+        validate: {
+            validator: function (data) {
+                if(_.isUndefined(this.startAt) || !_.isDate(this.startAt)) {
+                    return true;
+                }
+                var startAt = new Date(this.startAt);
+                var endAt = new Date(this.endAt);
+                return startAt.getTime() <= endAt.getTime();
+            },
+            message: 'End date cannot be before start date'
+        }
     }
 });
 
