@@ -1,3 +1,10 @@
+{{# if errors }}
+    <div class="alert alert-danger" role="alert">
+        {{# each errors }}
+            <div class="col-12">{{ this }}</div>
+        {{/each}}
+    </div>
+{{/if}}
 <div class="card">
     <div class="card-body">
         <form method="post">
@@ -14,14 +21,21 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-6">
-                        <label for="startdate">Start date</label>
-                        <input type="text" name="startdate" class="form-control" id="startdate" placeholder="Start date">
+                        <label for="startAt" class="col-md-12 control-label">Start at</label>
+                        <div class="input-group date form_datetime col-md-8" data-date-format="dd MM yyyy - HH:ii p" data-link-field="startAt">
+                            <input class="form-control" size="16" type="text" value="" readonly>
+                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                        </div>
+                        <input type="hidden" id="startAt" value="" /><br/>
                     </div>
                     <div class="col-6">
-                        <label for="enddate">End date</label>
-                        <input type="text" name="enddate" class="form-control" id="enddate" placeholder="End date">
+                        <label for="endAt" class="col-md-12 control-label">Start at</label>
+                        <div class="input-group date form_datetime col-md-8" data-date-format="dd MM yyyy - HH:ii p" data-link-field="endAt">
+                            <input class="form-control" size="16" type="text" value="" readonly>
+                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                        </div>
+                        <input type="hidden" id="endAt" value="" /><br/>
                     </div>
-
                 </div>
             </div>
 
@@ -31,3 +45,4 @@
         </form>
     </div>
 </div>
+

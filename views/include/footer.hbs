@@ -15,6 +15,7 @@
     <script type="text/javascript" src="/js/d3.min.js"></script>
     <script type="text/javascript" src="/js/cal-heatmap.min.js"></script>
     <script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="/js/bootstrap-datetimepicker.min.js"></script>
     <script>
         // DataTable
         $(".dataTable").each(function () {
@@ -24,6 +25,17 @@
         // CKEditor
         $(".ckeditor").each(function () {
             CKEDITOR.replace( this.id);
+        });
+
+        // Datetime picker
+        $('.form_datetime').datetimepicker({
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            forceParse: 0,
+            showMeridian: 1
         });
     </script>
 </div>

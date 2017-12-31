@@ -41,7 +41,7 @@ router.post('/add', function(req, res, next) {
         req.flash('post', req.body);
         res.redirect('/question/add');
     });
-})
+});
 
 router.get('/edit/:id(\\d+)', function(req, res, next) {
     req.data['_path'] = [{name: 'Question', url: '/question'},{name: 'Question'}, {name: 'Edit'}];
