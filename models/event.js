@@ -34,7 +34,11 @@ var EventSchema = new mongoose.Schema({
             },
             message: 'End date cannot be before start date'
         }
-    }
+    },
+    questions: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Question'
+    }]
 });
 
 EventSchema.plugin(autoIncrement.plugin, {
