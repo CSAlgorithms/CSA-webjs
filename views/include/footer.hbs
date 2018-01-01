@@ -16,6 +16,7 @@
     <script type="text/javascript" src="/js/cal-heatmap.min.js"></script>
     <script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="/js/datepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="/js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
     <script>
         // DataTable
         $(".dataTable").DataTable();
@@ -30,5 +31,11 @@
             forceParse: 0,
             showMeridian: 1
         });
+
+        // Ace editor
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/github");
+        editor.getSession().setMode("ace/mode/javascript");
+        editor.getSession().setUseWorker(false);
     </script>
 </div>

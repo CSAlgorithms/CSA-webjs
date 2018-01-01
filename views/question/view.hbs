@@ -8,14 +8,25 @@
         </div>
 
         <form style="padding-top: 50px">
-            <h4>Code:</h4>
+            <h4 class="card-title">Code</h4>
             <div class="form-group">
-                <div class="form-group">
-                    <textarea class="form-control" id="description" rows="10"></textarea>
-                </div>
+                <label for="sel1">Programming language:</label>
+                <select class="form-control" id="sel1">
+                    <option>Java</option>
+                    <option>C</option>
+                    <option>C++</option>
+                    <option>Python 2</option>
+                </select>
             </div>
-            <button type="submit" class="btn btn-primary">Batch test</button>
-            <button type="submit" class="btn btn-secondary">Submit</button>
+
+            <div class="col-12 editor-container">
+                <div id="editor"></div>
+            </div>
+
+            <div class="col-12 editor-btn">
+                <button type="submit" class="btn btn-primary">Batch test</button>
+                <button type="submit" class="btn btn-secondary">Submit</button>
+            </div>
         </form>
     </div>
 </div>
