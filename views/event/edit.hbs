@@ -44,16 +44,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Question 1</td>
-                        <td><a href="#">remove</a></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Quesiton 2</td>
-                        <td><a href="#">add</a></td>
-                    </tr>
+                    {{# each questions}}
+                        <tr>
+                            <td>{{this.qid}}</td>
+                            <td>{{this.title}}</td>
+                            <td><a href="#">remove</a></td>
+                        </tr>
+                    {{/each}}
                     </tbody>
                 </table>
             </div>

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var template = require('../helper/template');
 var Event = require('../models/event').Event;
+var Question = require('../models/question').Question;
 var log = require('winston');
 var _ = require('lodash');
 
@@ -62,7 +63,12 @@ router.get('/edit/:id(\\d+)', function(req, res, next) {
             if(success) {
                 req.data['success'] = success[0];
             }
-            template.render(req, res, 'event/edit', 'Edit event');
+
+            // Load questions
+            Question.find().then(function (questions) {
+                req.data.questions = questions;
+                template.render(req, res, 'event/edit', 'Edit event');
+            });
         } else {
             template.show404(req, res, 'Event not found');
         }
