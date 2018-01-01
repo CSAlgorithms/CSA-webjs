@@ -1,12 +1,10 @@
 <div class="card">
     <div class="card-body">
-        <h3 class="card-title">1 - Event title - Date</h3>
+        <h3 class="card-title">{{event.eid}} - {{event.title}}</h3>
+        <h4 class="card-title">{{formatDateTime event.startAt 'llll'}} - {{formatDateTime event.endAt 'llll'}}</h4>
         <div class="row">
             <div class="col-12">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi consectetur
-                dolor dolorum eius excepturi fugit impedit labore laboriosam mollitia, non
-                veritatis voluptas voluptatem? Accusantium architecto illo non nostrum,
-                reiciendis repudiandae!
+                {{{event.description}}}
             </div>
         </div>
 

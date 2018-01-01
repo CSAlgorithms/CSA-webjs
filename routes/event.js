@@ -54,7 +54,14 @@ router.get('/edit/:id(\\d+)', function(req, res, next) {
 
 router.get('/view/:id(\\d+)', function(req, res, next) {
     req.data['_path'] = [{name: 'Event', url: '/event'},{name: 'Date'}, {name: 'View'}];
-    template.render(req, res, 'event/view', 'View event');
+    Event.findOne({eid: req.params.id}).then(function (event) {
+        if(!_.isNull(event)) {
+            req.data.event = event;
+            template.render(req, res, 'event/view', 'View event');
+        } else {
+            template.show404(req, res, 'Event not found');
+        }
+    });
 });
 
 module.exports = router;
