@@ -6,7 +6,16 @@
             </div>
             <form>
                 <div align="center">
-                    Please contact: email@domain.com
+                    {{# if g_contactEmail}}
+                        <div class="col-12">
+                            Please contact:
+                        </div>
+                        <div class="col-12">
+                            <b>{{g_contactEmail}}</b>
+                        </div>
+                    {{else}}
+                        No admin contact information has been found
+                    {{/if}}
                 </div>
             </form>
             <div class="text-center">

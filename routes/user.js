@@ -7,6 +7,7 @@ var log = require('winston');
 
 router.get('/', function(req, res, next) {
     req.data['_path'] = [{name: 'User'},{name: 'List'}];
+    template.loadScript(req, 'dataTable');
     User.find({}).then(function(users) {
         req.data.users = users;
         template.render(req, res, 'user/list', 'All users');
@@ -20,6 +21,7 @@ router.get('/guest', function(req, res, next) {
 
 router.get('/leaderboard', function(req, res, next) {
     req.data['_path'] = [{name: 'User'},{name: 'Leaderboard'}];
+    template.loadScript(req, 'dataTable');
     template.render(req, res, 'user/leaderboard', 'Leaderboard');
 });
 
@@ -71,6 +73,7 @@ router.get('/profile/:id(\\d+)', function(req, res, next) {
             if(!_.isEmpty(user.firstName) || !_.isEmpty(user.lastName)) {
                 req.data.user.fullname = (user.firstName + ' ' + user.lastName).trim();
             }
+            template.loadScript(req, 'heatMap');
             template.render(req, res, 'user/profile', 'My Profile');
         } else {
             template.show404(req, res, 'Profile not found')

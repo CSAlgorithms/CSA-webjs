@@ -29,5 +29,23 @@ function show404(req, res, title) {
     render(req, res, 'error', title);
 }
 
+function loadScript(req, name, options) {
+    switch (name) {
+        case 'dataTable':
+        case 'heatMap':
+        case 'ckeditor':
+        case 'datetimepicker':
+        case 'ace':
+            if(_.isUndefined(req.data.g_script)) {
+                req.data.g_script = {};
+            }
+            req.data.g_script[name] = true;
+            break;
+        default:
+            throw new Error('Unknown script name: ' + name);
+    }
+}
+
 module.exports.render = render;
 module.exports.show404 = show404;
+module.exports.loadScript = loadScript;

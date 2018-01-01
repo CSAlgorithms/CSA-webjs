@@ -7,6 +7,7 @@ var _ = require('lodash');
 
 router.get('/', function(req, res, next) {
     req.data['_path'] = [{name: 'Event', url: '/event'},{name: 'List'}];
+    template.loadScript(req, 'dataTable');
     template.render(req, res, 'event/list', 'All events');
 });
 
@@ -20,6 +21,8 @@ router.get('/add', function(req, res, next) {
     if(post) {
         req.data['post'] = post[0];
     }
+    template.loadScript(req, 'ckeditor');
+    template.loadScript(req, 'datetimepicker');
     template.render(req, res, 'event/add', 'Add event');
 });
 
@@ -42,6 +45,7 @@ router.post('/add', function(req, res, next) {
 
 router.get('/edit/:id(\\d+)', function(req, res, next) {
     req.data['_path'] = [{name: 'Event', url: '/event'},{name: 'Event title'}, {name: 'Edit'}];
+    template.loadScript(req, 'dataTable');
     template.render(req, res, 'event/edit', 'Edit event');
 });
 

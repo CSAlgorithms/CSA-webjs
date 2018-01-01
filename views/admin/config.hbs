@@ -15,12 +15,12 @@
         <form method="post">
             <div class="form-group">
                 <label for="title">Website name</label>
-                <input type="text" value="{{post.webName}}" name="webName" class="form-control" id="title" placeholder="Enter website name">
+                <input type="text" value="{{g_webName}}" name="webName" class="form-control" id="title" placeholder="Enter website name">
             </div>
 
             <div class="form-group">
                 <label for="title">Contact email</label>
-                <input type="text" value="{{post.contactEmail}}" name="contactEmail" class="form-control" id="title" placeholder="Enter email">
+                <input type="text" value="{{g_contactEmail}}" name="contactEmail" class="form-control" id="title" placeholder="Enter email">
                 <small id="fileHelp" class="form-text text-muted">
                     Entered email will be displayed on password reset page
                 </small>
@@ -28,7 +28,7 @@
 
             <div class="form-group">
                 <label for="notification">System notification</label>
-                <input type="text" value="{{post.notification}}" name="notification" class="form-control" id="notification"
+                <input type="text" value="{{g_notification}}" name="notification" class="form-control" id="notification"
                        placeholder="System notification">
                 <small id="fileHelp" class="form-text text-muted">
                     All website visitors will see this message

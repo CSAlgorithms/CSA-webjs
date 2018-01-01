@@ -59,13 +59,16 @@ var Global = require('./models/global').Global;
 // Load website configuration
 app.use(function (req, res, next) {
     req.data = {};
-    req.data.webName = '{{CSAlgorithms}}';
-    Global.findOne().sort('-created_at').then(function (global) {
+    req.data.g_webName = '{{CSAlgorithms}}';
+    Global.findOne().sort({gid: 'desc'}).then(function (global) {
         if(!_.isEmpty(global.webName)) {
-            req.data.webName = global.webName;
+            req.data.g_webName = global.webName;
+        }
+        if(!_.isEmpty(global.contactEmail)) {
+            req.data.g_contactEmail = global.contactEmail;
         }
         if(!_.isEmpty(global.notification)) {
-            req.data.notification = global.notification;
+            req.data.g_notification = global.notification;
         }
         next();
     }).catch(function (reason) {

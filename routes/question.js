@@ -7,6 +7,7 @@ var _ = require('lodash');
 
 router.get('/', function(req, res, next) {
     req.data['_path'] = [{name: 'Question', url: '/question'},{name: 'List'}];
+    template.loadScript(req, 'dataTable');
     Question.find({}).then(function (questions) {
         req.data['questions'] = questions;
         template.render(req, res, 'question/list', 'All questions');
@@ -23,6 +24,7 @@ router.get('/add', function(req, res, next) {
     if(post) {
         req.data['post'] = post[0];
     }
+    template.loadScript(req, 'ckeditor');
     template.render(req, res, 'question/add', 'Add question');
 });
 
@@ -45,11 +47,13 @@ router.post('/add', function(req, res, next) {
 
 router.get('/edit/:id(\\d+)', function(req, res, next) {
     req.data['_path'] = [{name: 'Question', url: '/question'},{name: 'Question'}, {name: 'Edit'}];
+    template.loadScript(req, 'ckeditor');
     template.render(req, res, 'question/edit', 'Edit question');
 });
 
 router.get('/view/:id(\\d+)', function(req, res, next) {
     req.data['_path'] = [{name: 'Question', url: '/question'},{name: 'Question'}, {name: 'View'}];
+    template.loadScript(req, 'ace');
     Question.findOne({qid: req.params.id}).then(function(question) {
         if(!_.isNull(question)) {
             req.data.question = question;

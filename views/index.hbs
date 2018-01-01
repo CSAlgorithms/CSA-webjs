@@ -6,6 +6,9 @@
 
         <div class="content-wrapper">
             <div class="container-fluid">
+                {{# if g_notification}}
+                    <div class="alert alert-warning">{{g_notification}}</div>
+                {{/if}}
                 {{#if _path}}
                     <ol class="breadcrumb">
                         {{# each _path}}
