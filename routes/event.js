@@ -55,7 +55,6 @@ router.get('/edit/:id(\\d+)', function(req, res, next) {
             template.loadScript(req, 'datetimepicker');
             req.data.event = event;
             var errors = req.flash('errors');
-            var post = req.flash('post');
             var success = req.flash('success');
             if(errors) {
                 req.data['errors'] = errors;
