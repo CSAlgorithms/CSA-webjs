@@ -8,7 +8,10 @@ var _ = require('lodash');
 router.get('/', function(req, res, next) {
     req.data['_path'] = [{name: 'Event', url: '/event'},{name: 'List'}];
     template.loadScript(req, 'dataTable');
-    template.render(req, res, 'event/list', 'All events');
+    Event.find().then(function (events) {
+        req.data.events = events;
+        template.render(req, res, 'event/list', 'All events');
+    });
 });
 
 router.get('/add', function(req, res, next) {

@@ -23,6 +23,9 @@ require('./config/mongoose');
 // Configure logger
 require('./config/winston');
 
+// Configure hbs
+require('./config/hbs');
+
 // Routes
 var index = require('./routes/index');
 var user = require('./routes/user');
