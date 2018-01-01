@@ -6,7 +6,7 @@ var log = require('winston');
 var _ = require('lodash');
 
 router.get('/', function(req, res, next) {
-    req.data['_path'] = [{name: 'Question', url: '/question'},{name: 'List'}];
+    template.setPath(req, [{name: 'Question', url: '/question'},{name: 'List'}]);
     template.loadScript(req, 'dataTable');
     Question.find({}).then(function (questions) {
         req.data['questions'] = questions;
@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/add', function(req, res, next) {
-    req.data['_path'] = [{name: 'Question', url: '/question'},{name: 'Add'}];
+    template.setPath(req, [{name: 'Question', url: '/question'},{name: 'Add'}]);
     var errors = req.flash('errors');
     var post = req.flash('post');
     if(errors) {
@@ -46,19 +46,21 @@ router.post('/add', function(req, res, next) {
 });
 
 router.get('/edit/:id(\\d+)', function(req, res, next) {
-    req.data['_path'] = [{name: 'Question', url: '/question'},{name: 'Question'}, {name: 'Edit'}];
+    template.setPath(req, [{name: 'Question', url: '/question'},{name: 'Question'}, {name: 'Edit'}]);
     template.loadScript(req, 'ckeditor');
     template.render(req, res, 'question/edit', 'Edit question');
 });
 
 router.get('/view/:id(\\d+)', function(req, res, next) {
-    req.data['_path'] = [{name: 'Question', url: '/question'},{name: 'Question'}, {name: 'View'}];
     template.loadScript(req, 'ace');
     Question.findOne({qid: req.params.id}).then(function(question) {
         if(!_.isNull(question)) {
+            template.setPath(req, [{name: 'Question', url: '/question'}, {name: 'View'}]);
             req.data.question = question;
             template.render(req, res, 'question/view', 'View question');
-        } else {}
+        } else {
+            template.show404(req, res, 'Question now found')
+        }
     });
 });
 

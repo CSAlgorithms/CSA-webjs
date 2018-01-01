@@ -6,7 +6,7 @@ var log = require('winston');
 var _ = require('lodash');
 
 router.get('/', function(req, res, next) {
-    req.data['_path'] = [{name: 'Event', url: '/event'},{name: 'List'}];
+    template.setPath(req, [{name: 'Event', url: '/event'},{name: 'List'}]);
     template.loadScript(req, 'dataTable');
     Event.find().then(function (events) {
         req.data.events = events;
@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/add', function(req, res, next) {
-    req.data['_path'] = [{name: 'Event', url: '/event'},{name: 'Add'}];
+    template.setPath(req, [{name: 'Event', url: '/event'},{name: 'Add'}]);
     var errors = req.flash('errors');
     var post = req.flash('post');
     if(errors) {
@@ -47,15 +47,15 @@ router.post('/add', function(req, res, next) {
 });
 
 router.get('/edit/:id(\\d+)', function(req, res, next) {
-    req.data['_path'] = [{name: 'Event', url: '/event'},{name: 'Event title'}, {name: 'Edit'}];
+    template.setPath(req, [{name: 'Event', url: '/event'},{name: 'Event title'}, {name: 'Edit'}]);
     template.loadScript(req, 'dataTable');
     template.render(req, res, 'event/edit', 'Edit event');
 });
 
 router.get('/view/:id(\\d+)', function(req, res, next) {
-    req.data['_path'] = [{name: 'Event', url: '/event'},{name: 'Date'}, {name: 'View'}];
     Event.findOne({eid: req.params.id}).then(function (event) {
         if(!_.isNull(event)) {
+            template.setPath(req, [{name: 'Event', url: '/event'},{name: 'Date'}, {name: 'View'}]);
             req.data.event = event;
             template.render(req, res, 'event/view', 'View event');
         } else {

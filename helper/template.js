@@ -46,6 +46,14 @@ function loadScript(req, name, options) {
     }
 }
 
+function setPath(req, path) {
+    if(!_.isArray(path)) {
+        throw new Error('Path argument must be an array');
+    }
+    req.data._path = path;
+}
+
 module.exports.render = render;
 module.exports.show404 = show404;
 module.exports.loadScript = loadScript;
+module.exports.setPath = setPath;

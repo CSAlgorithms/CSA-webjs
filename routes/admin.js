@@ -6,7 +6,7 @@ var _ = require('lodash');
 var log = require('winston');
 
 router.get('/config', function(req, res, next) {
-    req.data['_path'] = [{name: 'Admin', url: '/admin'},{name: 'Configuration'}];
+    template.setPath(req, [{name: 'Admin', url: '/admin'},{name: 'Configuration'}]);
     var errors = req.flash('errors');
     var post = req.flash('post');
     var success = req.flash('success');
@@ -41,7 +41,7 @@ router.post('/config', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-    req.data['_path'] = [{name: 'Admin', url: '/admin'},{name: 'Home'}];
+    template.setPath(req, [{name: 'Admin', url: '/admin'},{name: 'Home'}]);
     template.render(req, res, 'admin/home', 'Admin panel');
 });
 
