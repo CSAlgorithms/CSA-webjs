@@ -47,9 +47,52 @@ router.post('/add', function(req, res, next) {
 });
 
 router.get('/edit/:id(\\d+)', function(req, res, next) {
-    template.setPath(req, [{name: 'Event', url: '/event'},{name: 'Event title'}, {name: 'Edit'}]);
-    template.loadScript(req, 'dataTable');
-    template.render(req, res, 'event/edit', 'Edit event');
+    Event.findOne({eid: req.params.id}).then(function(event){
+        if(!_.isNull(event)) {
+            template.setPath(req, [{name: 'Event', url: '/event'}, {name: 'Edit'}]);
+            template.loadScript(req, 'dataTable');
+            template.loadScript(req, 'ckeditor');
+            template.loadScript(req, 'datetimepicker');
+            req.data.event = event;
+            var errors = req.flash('errors');
+            var post = req.flash('post');
+            var success = req.flash('success');
+            if(errors) {
+                req.data['errors'] = errors;
+            }
+            if(success) {
+                req.data['success'] = success[0];
+            }
+            template.render(req, res, 'event/edit', 'Edit event');
+        } else {
+            template.show404(req, res, 'Event not found');
+        }
+    });
+});
+
+router.post('/edit/:id(\\d+)', function(req, res, next) {
+    var body = _.pick(req.body, ['title', 'description', 'startAt', 'endAt']);
+    Event.findOne({eid: req.params.id}).then(function(event){
+        if(!_.isNull(event)) {
+            event.title = body.title;
+            event.description = body.description;
+            event.startAt = body.startAt;
+            event.endAt = body.endAt;
+            event.save().then(function(doc) {
+                req.flash('success', 'Event update successfully')
+                res.redirect('/event/edit/' + req.params.id);
+            }).catch(function (reason) {
+                var messages = [];
+                for(var key in reason.errors) {
+                    messages.push(reason.errors[key].message);
+                }
+                req.flash('errors', messages);
+                res.redirect('/event/edit/' + req.params.id);
+            });
+        } else {
+            res.redirect('/event/edit/' + req.params.id);
+        }
+    });
 });
 
 router.get('/view/:id(\\d+)', function(req, res, next) {

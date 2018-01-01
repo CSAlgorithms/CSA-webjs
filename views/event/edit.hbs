@@ -1,27 +1,47 @@
+{{# if success }}
+    <div class="alert alert-success" role="alert">{{success}}</div>
+{{/if}}
+
+{{# if errors }}
+    <div class="alert alert-danger" role="alert">
+        {{# each errors }}
+            <div class="col-12">{{ this }}</div>
+        {{/each}}
+    </div>
+{{/if}}
 <div class="card">
     <div class="card-body">
-        <form>
+        <form method="post">
             <div class="form-group">
                 <label for="title">Event Title</label>
-                <input type="text" name="title" class="form-control" id="title" placeholder="Enter event title">
+                <input type="text" value="{{event.title}}" name="title" class="form-control" id="title" placeholder="Enter event title">
             </div>
 
             <div class="form-group">
                 <label for="description">Description</label>
-                <input type="text" name="description" class="form-control" id="description" placeholder="Enter event description">
+                <textarea type="text" name="description" class="form-control ckeditor" id="description">
+                    {{event.description}}
+                </textarea>
             </div>
 
             <div class="form-group">
                 <div class="row">
                     <div class="col-6">
-                        <label for="startdate">Start date</label>
-                        <input type="text" name="startdate" class="form-control" id="startdate" placeholder="Start date">
+                        <label for="startAt" class="col-md-12 control-label">Start at</label>
+                        <div class="input-group date form_datetime col-md-8" data-date-format="yyyy-mm-ddThh:ii:00" data-link-field="startAt">
+                            <input class="form-control" size="16" type="text" value="{{event.startAt}}">
+                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                        </div>
+                        <input type="hidden" name="startAt" id="startAt" value="{{event.startAt}}" /><br/>
                     </div>
                     <div class="col-6">
-                        <label for="enddate">End date</label>
-                        <input type="text" name="enddate" class="form-control" id="enddate" placeholder="End date">
+                        <label for="endAt" class="col-md-12 control-label">End at</label>
+                        <div class="input-group date form_datetime col-md-8" data-date-format="yyyy-mm-ddThh:ii:00" data-link-field="endAt">
+                            <input class="form-control" size="16" type="text" value="{{event.endAt}}">
+                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                        </div>
+                        <input type="hidden" name="endAt" id="endAt" value="{{event.endAt}}" /><br/>
                     </div>
-
                 </div>
             </div>
 
