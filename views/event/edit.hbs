@@ -67,18 +67,38 @@
 
 <script>
     function addQuestion(dom) {
-        var data = {};
-        data['e_id'] = "{{event.id}}";
-        data['q_id'] = dom.dataset.questionid;
-        $.post( "/ajax/event/add_question", data)
+        var formData = {};
+        formData['eid'] = "{{event.id}}";
+        formData['qid'] = dom.dataset.questionid;
+        $.post( "/ajax/event/add_question", formData)
                 .done(function( data ) {
-                    console.log(data);
+                    console.log('Add question function returned: ', data);
+                    if(data.code === 200) {
+                        console.log('Question ' + formData['qid'] + ' added');
+                        dom.innerText= 'remove';
+                        dom.onclick = function() { return removeQuestion(dom);}
+                    } else {
+                        console.error('Error adding question');
+                    }
                 });
         return false;
     }
 
     function removeQuestion(dom) {
-        console.log("Remove question");
+        var formData = {};
+        formData['eid'] = "{{event.id}}";
+        formData['qid'] = dom.dataset.questionid;
+        $.post( "/ajax/event/remove_question", formData)
+                .done(function( data ) {
+                    console.log('Remove question function returned: ', data);
+                    if(data.code === 200) {
+                        console.log('Question ' + formData['qid'] + ' removed');
+                        dom.innerText = 'add';
+                        dom.onclick = function() { return addQuestion(dom);};
+                    } else {
+                        console.error('Error removing question');
+                    }
+                });
         return false;
     }
 </script>
