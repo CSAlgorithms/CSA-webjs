@@ -110,6 +110,7 @@ router.get('/view/:id(\\d+)', function(req, res, next) {
         if(!_.isNull(event)) {
             template.setPath(req, [{name: 'Event', url: '/event'},{name: 'Date'}, {name: 'View'}]);
             req.data.event = event;
+            // TODO Use virtual and populate to get those values
             Question.find({'_id': {$in : event.questions}}).then(function(questions){
                 req.data.questions = questions;
                 template.render(req, res, 'event/view', 'View event');
