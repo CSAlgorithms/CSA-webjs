@@ -23,13 +23,17 @@
                     </ol>
                 {{/if}}
 
-                {{# if success }}
-                    <div class="alert alert-success" role="alert">{{success}}</div>
+                {{# if g_errors }}
+                    <div class="alert alert-danger" role="alert">
+                        {{# each g_errors }}
+                            <div class="col-12">{{ this }}</div>
+                        {{/each}}
+                    </div>
                 {{/if}}
 
-                {{# if errors }}
-                    <div class="alert alert-danger" role="alert">
-                        {{# each errors }}
+                {{# if g_success }}
+                    <div class="alert alert-success" role="alert">
+                        {{# each g_success }}
                             <div class="col-12">{{ this }}</div>
                         {{/each}}
                     </div>
