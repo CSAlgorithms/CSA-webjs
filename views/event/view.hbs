@@ -1,20 +1,24 @@
 <div class="card">
     <div class="card-body">
         <h3 class="card-title">{{event.eid}} - {{event.title}}</h3>
-        <h4 class="card-title">{{formatDateTime event.startAt 'llll'}} - {{formatDateTime event.endAt 'llll'}}</h4>
+        <small class="form-text text-muted">{{formatDateTime event.startAt 'llll'}} - {{formatDateTime event.endAt 'llll'}}</small>
         <div class="row">
-            <div class="col-12">
+            <div class="col-12" style="padding: 30px">
                 {{{event.description}}}
             </div>
         </div>
 
-        <div class="row" style="padding-top: 20px">
+        <div class="row">
             <div class="col-12">
                 <h3 class="card-title">Questions</h3>
                 <ul class="list-group">
-                    <li class="list-group-item">Question 1</li>
-                    <li class="list-group-item">Question 2</li>
-                    <li class="list-group-item">Question 3</li>
+                    {{# if questions}}
+                        {{# each questions}}
+                            <li class="list-group-item"><a href="/question/view/{{this.qid}}">{{this.title}}</a></li>
+                        {{/each}}
+                    {{else}}
+                        <li class="list-group-item"><em>No questions found</em></li>
+                    {{/if}}
                 </ul>
             </div>
         </div>
