@@ -35,4 +35,10 @@ QuestionSchema.plugin(autoIncrement.plugin, {
     incrementBy: 1
 });
 
+QuestionSchema.virtual('events', {
+    ref: 'Event',
+    localField: '_id',
+    foreignField: 'questions'
+});
+
 module.exports.Question = mongoose.model('Question', QuestionSchema);
