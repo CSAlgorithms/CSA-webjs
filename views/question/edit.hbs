@@ -7,18 +7,7 @@
             </div>
             <div class="form-group">
                 <label for="score">Score</label>
-                <select name ="score" class="form-control" id="score">
-                    <option>100</option>
-                    <option>200</option>
-                    <option>300</option>
-                    <option>400</option>
-                    <option>500</option>
-                    <option>600</option>
-                    <option>700</option>
-                    <option>800</option>
-                    <option>900</option>
-                    <option>1000</option>
-                </select>
+                <input value="{{question.score}}" type="text" name="score" class="form-control" id="score" placeholder="Score (e.g. 100, 200, etc...)">
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
@@ -70,7 +59,7 @@
                     The note will be highlighted on the question page
                 </small>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Save</button>
         </form>
     </div>
 </div>
