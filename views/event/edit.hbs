@@ -48,14 +48,26 @@
                         <tr>
                             <td>{{this.qid}}</td>
                             <td>{{this.title}}</td>
-                            <td><a href="#">remove</a></td>
+                            <td><a data-questionid="{{this.id}}" onclick="return addRemove(this)" href="#">remove</a></td>
                         </tr>
                     {{/each}}
                     </tbody>
                 </table>
             </div>
-
             <button type="submit" class="btn btn-primary">Save</button>
         </form>
     </div>
 </div>
+
+<script>
+    function addRemove(dom) {
+        var data = {};
+        data['e_id'] = "{{event.id}}";
+        data['q_id'] = dom.dataset.questionid;
+        $.post( "/ajax/event/add_question", data)
+                .done(function( data ) {
+                    console.log(data);
+                });
+        return false;
+    }
+</script>
