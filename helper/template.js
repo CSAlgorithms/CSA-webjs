@@ -11,6 +11,10 @@ function render(req, res, page, title) {
     req.data.main_page = page;
     req.data.main_title = title;
 
+    // Get messages
+    req.data.g_errors = req.flash('g_errors');
+    req.data.g_success = req.flash('g_success');
+
     // Render file
     res.render('index', req.data);
 }
@@ -53,7 +57,32 @@ function setPath(req, path) {
     req.data._path = path;
 }
 
+function setSuccess(req, messages) {
+    if(!_.isArray(messages)) {
+        messages = [messages];
+    }
+    req.flash('g_success', messages);
+}
+
+function setReason(req, reason) {
+    var messages = [];
+    for(var key in reason.errors) {
+        messages.push(reason.errors[key].message);
+    }
+    setErrors(req, messages);
+}
+
+function setErrors(req, messages) {
+    if(!_.isArray(messages)) {
+        messages = [messages];
+    }
+    req.flash('g_errors', messages);
+}
+
 module.exports.render = render;
 module.exports.show404 = show404;
 module.exports.loadScript = loadScript;
 module.exports.setPath = setPath;
+module.exports.setReason = setReason;
+module.exports.setErrors = setErrors;
+module.exports.setSuccess = setSuccess;
