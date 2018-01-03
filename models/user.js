@@ -54,4 +54,10 @@ UserSchema.plugin(autoIncrement.plugin, {
     incrementBy: 1
 });
 
+UserSchema.virtual('events', {
+    ref: 'Event',
+    localField: '_id',
+    foreignField: 'members'
+});
+
 module.exports.User = mongoose.model('User', UserSchema);
