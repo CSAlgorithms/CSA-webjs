@@ -106,15 +106,12 @@ router.post('/edit/:id(\\d+)', function(req, res, next) {
 });
 
 router.get('/view/:id(\\d+)', function(req, res, next) {
-    Event.findOne({eid: req.params.id}).then(function (event) {
+    Event.findOne({eid: req.params.id}).populate('questions').then(function (event) {
         if(!_.isNull(event)) {
             template.setPath(req, [{name: 'Event', url: '/event'},{name: 'Date'}, {name: 'View'}]);
             req.data.event = event;
-            // TODO Use virtual and populate to get those values
-            Question.find({'_id': {$in : event.questions}}).then(function(questions){
-                req.data.questions = questions;
-                template.render(req, res, 'event/view', 'View event');
-            });
+            console.log(event);
+            template.render(req, res, 'event/view', 'View event');
         } else {
             template.show404(req, res, 'Event not found');
         }

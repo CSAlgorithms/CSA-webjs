@@ -12,8 +12,8 @@
             <div class="col-12">
                 <h3 class="card-title">Questions</h3>
                 <ul class="list-group">
-                    {{# if questions}}
-                        {{# each questions}}
+                    {{# if event.questions}}
+                        {{# each event.questions}}
                             <li class="list-group-item"><a href="/question/view/{{this.qid}}">{{this.title}}</a></li>
                         {{/each}}
                     {{else}}
