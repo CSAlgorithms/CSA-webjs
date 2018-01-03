@@ -21,7 +21,7 @@ var QuestionSchema = new mongoose.Schema({
     },
     outputPath: {
         type: String,
-        required: true
+        required: false
     },
     note: {
         type: String

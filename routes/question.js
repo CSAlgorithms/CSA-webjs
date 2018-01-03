@@ -46,9 +46,56 @@ router.post('/add', function(req, res, next) {
 });
 
 router.get('/edit/:id(\\d+)', function(req, res, next) {
-    template.setPath(req, [{name: 'Question', url: '/question'},{name: 'Question'}, {name: 'Edit'}]);
-    template.loadScript(req, 'ckeditor');
-    template.render(req, res, 'question/edit', 'Edit question');
+    Question.findOne({qid: req.params.id}).then(function(question){
+        if(!_.isNull(question)) {
+            template.setPath(req, [{name: 'Question', url: '/question'},{name: 'Question'}, {name: 'Edit'}]);
+            template.loadScript(req, 'ckeditor');
+            req.data.question = question;
+            var errors = req.flash('errors');
+            var success = req.flash('success');
+            if(errors) req.data['errors'] = errors;
+            if(success) req.data['success'] = success[0];
+            template.render(req, res, 'question/edit', 'Edit question');
+        } else {
+            template.show404(req, res, 'Question not found');
+        }
+    });
+});
+
+router.post('/edit/:id(\\d+)', function(req, res, next) {
+    var body = _.pick(req.body, ['title', 'score', 'description', 'outputPath', 'removeOutputPath', 'note']);
+    Question.findOne({qid: req.params.id}).then(function(question){
+        if(!_.isNull(question)) {
+            question.title = body.title;
+            question.score = body.score;
+            question.description = body.description;
+            question.note = body.note;
+
+            // If should remove the old file value
+            if(body.removeOutputPath && body.removeOutputPath === question.outputPath) {
+                question.outputPath = '';
+            }
+
+            // If file replaced
+            if(body.outputPath) {
+                question.outputPath = body.outputPath;
+            }
+
+            question.save().then(function(doc) {
+                req.flash('success', 'Question updated successfully')
+                res.redirect('/question/edit/' + req.params.id);
+            }).catch(function (reason) {
+                var messages = [];
+                for(var key in reason.errors) {
+                    messages.push(reason.errors[key].message);
+                }
+                req.flash('errors', messages);
+                res.redirect('/question/edit/' + req.params.id);
+            });
+        } else {
+            res.redirect('/question/edit/' + req.params.id);
+        }
+    });
 });
 
 router.get('/view/:id(\\d+)', function(req, res, next) {
