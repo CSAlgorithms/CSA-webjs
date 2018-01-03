@@ -65,7 +65,12 @@ router.get('/edit/:id(\\d+)', function(req, res, next) {
             }
 
             // Load questions
-            Question.find().then(function (questions) {
+            Question.find().lean().then(function (questions) {
+
+                // For each question check if can add/remove
+                for(var i = 0; i < questions.length; i++) {
+                    questions[i].isAdd = event.questions.indexOf(questions[i]._id) < 0;
+                }
                 req.data.questions = questions;
                 template.render(req, res, 'event/edit', 'Edit event');
             });

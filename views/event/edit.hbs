@@ -48,7 +48,13 @@
                         <tr>
                             <td>{{this.qid}}</td>
                             <td>{{this.title}}</td>
-                            <td><a data-questionid="{{this.id}}" onclick="return addRemove(this)" href="#">remove</a></td>
+                            <td>
+                                {{# if this.isAdd}}
+                                    <a data-questionid="{{this._id}}" onclick="return addQuestion(this)" href="#">add</a>
+                                {{else}}
+                                    <a data-questionid="{{this._id}}" onclick="return removeQuestion(this)" href="#">remove</a>
+                                {{/if}}
+                            </td>
                         </tr>
                     {{/each}}
                     </tbody>
@@ -60,7 +66,7 @@
 </div>
 
 <script>
-    function addRemove(dom) {
+    function addQuestion(dom) {
         var data = {};
         data['e_id'] = "{{event.id}}";
         data['q_id'] = dom.dataset.questionid;
@@ -68,6 +74,11 @@
                 .done(function( data ) {
                     console.log(data);
                 });
+        return false;
+    }
+
+    function removeQuestion(dom) {
+        console.log("Remove question");
         return false;
     }
 </script>
