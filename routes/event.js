@@ -82,26 +82,20 @@ router.get('/edit/:id(\\d+)', function(req, res, next) {
 
 router.post('/edit/:id(\\d+)', function(req, res, next) {
     var body = _.pick(req.body, ['title', 'description', 'startAt', 'endAt']);
-    Event.findOne({eid: req.params.id}).then(function(event){
-        if(!_.isNull(event)) {
-            event.title = body.title;
-            event.description = body.description;
-            event.startAt = body.startAt;
-            event.endAt = body.endAt;
-            event.save().then(function(doc) {
-                req.flash('success', 'Event update successfully')
-                res.redirect('/event/edit/' + req.params.id);
-            }).catch(function (reason) {
-                var messages = [];
-                for(var key in reason.errors) {
-                    messages.push(reason.errors[key].message);
-                }
-                req.flash('errors', messages);
-                res.redirect('/event/edit/' + req.params.id);
-            });
+    Event.findOneAndUpdate({eid: req.params.id}, body).then(function(event){
+        if(_.isNull(event)) {
+            res.redirect('/event/edit/' + req.params.id);
         } else {
+            req.flash('success', 'Event update successfully')
             res.redirect('/event/edit/' + req.params.id);
         }
+    }).catch(function(reason){
+        var messages = [];
+        for(var key in reason.errors) {
+            messages.push(reason.errors[key].message);
+        }
+        req.flash('errors', messages);
+        res.redirect('/event/edit/' + req.params.id);
     });
 });
 

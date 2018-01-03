@@ -60,4 +60,9 @@ UserSchema.virtual('events', {
     foreignField: 'members'
 });
 
+UserSchema.pre('findOneAndUpdate', function(next) {
+    this.options.runValidators = true;
+    next();
+});
+
 module.exports.User = mongoose.model('User', UserSchema);

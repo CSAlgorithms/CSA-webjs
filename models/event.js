@@ -52,4 +52,9 @@ EventSchema.plugin(autoIncrement.plugin, {
     incrementBy: 1
 });
 
+EventSchema.pre('findOneAndUpdate', function(next) {
+    this.options.runValidators = true;
+    next();
+});
+
 module.exports.Event = mongoose.model('Event', EventSchema);

@@ -41,4 +41,9 @@ QuestionSchema.virtual('events', {
     foreignField: 'questions'
 });
 
+QuestionSchema.pre('findOneAndUpdate', function(next) {
+    this.options.runValidators = true;
+    next();
+});
+
 module.exports.Question = mongoose.model('Question', QuestionSchema);

@@ -39,4 +39,9 @@ GlobalSchema.plugin(autoIncrement.plugin, {
     incrementBy: 1
 });
 
+GlobalSchema.pre('findOneAndUpdate', function(next) {
+    this.options.runValidators = true;
+    next();
+});
+
 module.exports.Global = mongoose.model('Global', GlobalSchema);
