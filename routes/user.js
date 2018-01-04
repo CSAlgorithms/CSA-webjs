@@ -80,6 +80,7 @@ router.get('/edit/:id(\\d+)', function(req, res, next) {
 router.post('/edit/:id(\\d+)', function(req, res, next) {
     var body = _.pick(req.body, ['email', 'password', 'firstName', 'lastName']);
     if(_.isEmpty(body.password)) delete body.password;
+    // Note: Do not replace this by findOneAndUpdate because of the user scheme pre hook
     User.findOne({uid: req.params.id}).then(function(user){
         if(!_.isNull(user)) {
             user = _.extend(user, body);
