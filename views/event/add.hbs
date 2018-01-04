@@ -3,13 +3,13 @@
         <form method="post">
             <div class="form-group">
                 <label for="title">Event Title</label>
-                <input type="text" name="title" class="form-control" id="title" value="{{post.title}}" placeholder="Enter event title">
+                <input type="text" name="title" class="form-control" id="title" value="{{g_post.title}}" placeholder="Enter event title">
             </div>
 
             <div class="form-group">
                 <label for="description">Description</label>
                 <textarea type="text" name="description" class="form-control ckeditor" id="description">
-                    {{post.description}}
+                    {{g_post.description}}
                 </textarea>
             </div>
 
@@ -18,18 +18,18 @@
                     <div class="col-6">
                         <label for="startAt" class="col-md-12 control-label">Start at</label>
                         <div class="input-group date form_datetime col-md-8" data-date-format="yyyy-mm-ddThh:ii:00" data-link-field="startAt">
-                            <input class="form-control" size="16" type="text" value="{{post.startAt}}">
+                            <input class="form-control" size="16" type="text" value="{{g_post.startAt}}">
                             <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                         </div>
-                        <input type="hidden" name="startAt" id="startAt" value="{{post.startAt}}" /><br/>
+                        <input type="hidden" name="startAt" id="startAt" value="{{g_post.startAt}}" /><br/>
                     </div>
                     <div class="col-6">
                         <label for="endAt" class="col-md-12 control-label">End at</label>
                         <div class="input-group date form_datetime col-md-8" data-date-format="yyyy-mm-ddThh:ii:00" data-link-field="endAt">
-                            <input class="form-control" size="16" type="text" value="{{post.endAt}}">
+                            <input class="form-control" size="16" type="text" value="{{g_post.endAt}}">
                             <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
                         </div>
-                        <input type="hidden" name="endAt" id="endAt" value="{{post.endAt}}" /><br/>
+                        <input type="hidden" name="endAt" id="endAt" value="{{g_post.endAt}}" /><br/>
                     </div>
                 </div>
             </div>

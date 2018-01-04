@@ -1,69 +1,51 @@
 var express = require('express');
 var router = express.Router();
-var template = require('../helper/template');
 var Question = require('../models/question').Question;
-var log = require('winston');
 var _ = require('lodash');
 
 router.get('/', function(req, res, next) {
-    template.setPath(req, [{name: 'Question', url: '/question'},{name: 'List'}]);
-    template.loadScript(req, 'dataTable');
+    res.setPath([{name: 'Question', url: '/question'},{name: 'List'}]);
+    res.loadScript('dataTable');
     Question.find({}).then(function (questions) {
-        req.data['questions'] = questions;
-        template.render(req, res, 'question/list', 'All questions');
+        res.addData('questions', questions);
+        res.templateRender('question/list', 'All questions');
     });
 });
 
 router.get('/add', function(req, res, next) {
-    template.setPath(req, [{name: 'Question', url: '/question'},{name: 'Add'}]);
-    var errors = req.flash('errors');
-    var post = req.flash('post');
-    if(errors) {
-        req.data['errors'] = errors;
-    }
-    if(post) {
-        req.data['post'] = post[0];
-    }
-    template.loadScript(req, 'ckeditor');
-    template.render(req, res, 'question/add', 'Add question');
+    res.setPath([{name: 'Question', url: '/question'},{name: 'Add'}]);
+    res.loadScript('ckeditor');
+    res.templateRender('question/add', 'Add question');
 });
 
 router.post('/add', function(req, res, next) {
     var body = _.pick(req.body, ['title', 'score', 'description', 'outputPath', 'note']);
     var question = new Question(body);
     question.save().then(function (doc) {
-        log.info('Question ' + doc.qid + ' added');
+        res.setSuccess('Question added successfully');
         res.redirect('/question');
     }).catch(function (reason) {
-        var messages = [];
-        for(var key in reason.errors) {
-            messages.push(reason.errors[key].message);
-        }
-        req.flash('errors', messages);
-        req.flash('post', req.body);
-        res.redirect('/question/add');
+        res.setReason(reason);
+        res.redirectPost('/question/add');
     });
 });
 
 router.get('/edit/:id(\\d+)', function(req, res, next) {
     Question.findOne({qid: req.params.id}).then(function(question){
         if(!_.isNull(question)) {
-            template.setPath(req, [{name: 'Question', url: '/question'},{name: 'Question'}, {name: 'Edit'}]);
-            template.loadScript(req, 'ckeditor');
-            req.data.question = question;
-            var errors = req.flash('errors');
-            var success = req.flash('success');
-            if(errors) req.data['errors'] = errors;
-            if(success) req.data['success'] = success[0];
-            template.render(req, res, 'question/edit', 'Edit question');
+            res.setPath([{name: 'Question', url: '/question'},{name: 'Question'}, {name: 'Edit'}]);
+            res.loadScript('ckeditor');
+            res.addData('question', question);
+            res.templateRender('question/edit', 'Edit question');
         } else {
-            template.show404(req, res, 'Question not found');
+            res.redirect404('Question not found');
         }
     });
 });
 
 router.post('/edit/:id(\\d+)', function(req, res, next) {
     var body = _.pick(req.body, ['title', 'score', 'description', 'outputPath', 'removeOutputPath', 'note']);
+    // Use "find then update" instead of "find and update" because outputPath is empty by default
     Question.findOne({qid: req.params.id}).then(function(question){
         if(!_.isNull(question)) {
             question.title = body.title;
@@ -82,14 +64,10 @@ router.post('/edit/:id(\\d+)', function(req, res, next) {
             }
 
             question.save().then(function(doc) {
-                req.flash('success', 'Question updated successfully')
+                res.setSuccess('Question updated successfully');
                 res.redirect('/question/edit/' + req.params.id);
             }).catch(function (reason) {
-                var messages = [];
-                for(var key in reason.errors) {
-                    messages.push(reason.errors[key].message);
-                }
-                req.flash('errors', messages);
+                res.setReason(reason);
                 res.redirect('/question/edit/' + req.params.id);
             });
         } else {
@@ -99,14 +77,14 @@ router.post('/edit/:id(\\d+)', function(req, res, next) {
 });
 
 router.get('/view/:id(\\d+)', function(req, res, next) {
-    template.loadScript(req, 'ace');
+    res.loadScript('ace');
     Question.findOne({qid: req.params.id}).then(function(question) {
         if(!_.isNull(question)) {
-            template.setPath(req, [{name: 'Question', url: '/question'}, {name: 'View'}]);
-            req.data.question = question;
-            template.render(req, res, 'question/view', 'View question');
+            res.setPath([{name: 'Question', url: '/question'}, {name: 'View'}]);
+            res.addData('question', question);
+            res.templateRender('question/view', 'View question');
         } else {
-            template.show404(req, res, 'Question now found')
+            res.redirect404('Question not found');
         }
     });
 });

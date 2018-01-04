@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var hbs = require('hbs');
 var _ = require('lodash');
-var template = require('./helper/template');
 var flash = require('connect-flash');
 var session = require('express-session');
 
@@ -57,29 +56,20 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(flash());
 
-// Load website configuration from db
-var Global = require('./models/global').Global;
-
 // Load website configuration
-app.use(function (req, res, next) {
-    req.data = {};
-    req.data.g_webName = '{{CSAlgorithms}}';
-    Global.findOne().sort({gid: 'desc'}).then(function (global) {
-        if(!_.isEmpty(global.webName)) {
-            req.data.g_webName = global.webName;
-        }
-        if(!_.isEmpty(global.contactEmail)) {
-            req.data.g_contactEmail = global.contactEmail;
-        }
-        if(!_.isEmpty(global.notification)) {
-            req.data.g_notification = global.notification;
-        }
-        next();
-    }).catch(function (reason) {
-        log.info('Global data was not found, using default configuration')
-        next();
-    });
-});
+var routers = require('./config/router');
+app.use(routers.init);
+app.use(routers.funcAddData);
+app.use(routers.funcGetData);
+app.use(routers.funcTemplateRender);
+app.use(routers.funcSetPath);
+app.use(routers.funcLoadScript);
+app.use(routers.funcRedirect404);
+app.use(routers.funcSetErrors);
+app.use(routers.funcSetReason);
+app.use(routers.funcSetSuccess);
+app.use(routers.funcRedirectPost);
+app.use(routers.global);
 
 // Register routes
 app.use('/', index);
@@ -104,7 +94,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  template.render(req, res, 'error', 'Error');
+  res.templateRender('error', 'Error');
 });
 
 module.exports = app;
