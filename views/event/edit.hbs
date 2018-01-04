@@ -68,13 +68,13 @@
 <script>
     function addQuestion(dom) {
         var formData = {};
-        formData['eid'] = "{{event.id}}";
-        formData['qid'] = dom.dataset.questionid;
+        formData['e_id'] = "{{event.id}}";
+        formData['q_id'] = dom.dataset.questionid;
         $.post( "/ajax/event/add_question", formData)
                 .done(function( data ) {
                     console.log('Add question function returned: ', data);
                     if(data.code === 200) {
-                        console.log('Question ' + formData['qid'] + ' added');
+                        console.log('Question added');
                         dom.innerText= 'remove';
                         dom.onclick = function() { return removeQuestion(dom);}
                     } else {
@@ -86,13 +86,13 @@
 
     function removeQuestion(dom) {
         var formData = {};
-        formData['eid'] = "{{event.id}}";
-        formData['qid'] = dom.dataset.questionid;
+        formData['e_id'] = "{{event.id}}";
+        formData['q_id'] = dom.dataset.questionid;
         $.post( "/ajax/event/remove_question", formData)
                 .done(function( data ) {
                     console.log('Remove question function returned: ', data);
                     if(data.code === 200) {
-                        console.log('Question ' + formData['qid'] + ' removed');
+                        console.log('Question removed');
                         dom.innerText = 'add';
                         dom.onclick = function() { return addQuestion(dom);};
                     } else {
