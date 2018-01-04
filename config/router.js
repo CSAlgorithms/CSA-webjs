@@ -8,19 +8,21 @@ function init(req, res, next) {
 
 function global(req, res, next) {
     res.addData('g_webName', '{{CSAlgorithms}}');
-    Global.findOne().sort({gid: 'desc'}).then(function (global) {
-        if(!_.isEmpty(global.webName)) {
-            res.addData('g_webName', global.webName);
-        }
-        if(!_.isEmpty(global.contactEmail)) {
-            res.addData('g_contactEmail', global.contactEmail);
-        }
-        if(!_.isEmpty(global.notification)) {
-            res.addData('g_notification', global.notification);
+    Global.find({}).then(function (global) {
+        if(global.length > 0) {
+            global = global.pop();
+            if(!_.isEmpty(global.webName)) {
+                res.addData('g_webName', global.webName);
+            }
+            if(!_.isEmpty(global.contactEmail)) {
+                res.addData('g_contactEmail', global.contactEmail);
+            }
+            if(!_.isEmpty(global.notification)) {
+                res.addData('g_notification', global.notification);
+            }
         }
         next();
     }).catch(function (reason) {
-        log.info('Global data was not found, using default configuration')
         next();
     });
 }
