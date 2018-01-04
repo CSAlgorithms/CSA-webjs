@@ -121,10 +121,15 @@ function funcSetErrors(req, res, next) {
 function funcSetReason(req, res, next) {
     res.setReason = function(reason) {
         var messages = [];
-        for(var key in reason.errors) {
-            messages.push(reason.errors[key].message);
+        if(reason.errors) {
+            for(var key in reason.errors) {
+                messages.push(reason.errors[key].message);
+            }
         }
-        res.setErrors(messages);
+
+        if(messages.length > 0) {
+            res.setErrors(messages);
+        }
     };
     next();
 }

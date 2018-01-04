@@ -66,8 +66,29 @@ router.get('/profile/:id(\\d+)', function(req, res, next) {
 });
 
 router.get('/edit/:id(\\d+)', function(req, res, next) {
-    res.setPath([{name: 'User'}, {name: 'Profile'},{name: 'Edit'}]);
-    res.templateRender('user/edit', 'Edit profile');
+    User.findOne({uid: req.params.id}).then(function(user){
+        if(_.isNull(user)) {
+            res.redirect404('User not found');
+        } else {
+            res.setPath([{name: 'User'}, {name: 'Profile'},{name: 'Edit'}]);
+            res.addData('user', user);
+            res.templateRender('user/edit', 'Edit profile');
+        }
+    });
+});
+
+router.post('/edit/:id(\\d+)', function(req, res, next) {
+    var body = _.pick(req.body, ['email', 'password', 'firstName', 'lastName']);
+    if(_.isEmpty(body.password)) delete body.password;
+    User.findOneAndUpdate({uid: req.params.id}, body).then(function(user){
+        if(!_.isNull(user)) {
+            res.setSuccess('Profile updated successfully');
+        }
+        res.redirect('/user/edit/' + req.params.id);
+    }).catch(function (reason) {
+        res.setReason(reason);
+        res.redirect('/user/edit/' + req.params.id);
+    });
 });
 
 module.exports = router;

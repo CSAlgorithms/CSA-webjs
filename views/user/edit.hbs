@@ -6,11 +6,11 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <label for="firstName">First name</label>
-                            <input class="form-control" id="firstName" type="text" placeholder="Enter first name">
+                            <input class="form-control" value="{{user.firstName}}" name="firstName" id="firstName" type="text" placeholder="Enter first name">
                         </div>
                         <div class="col-md-6">
                             <label for="lastName">Last name</label>
-                            <input class="form-control" id="lastName" type="text" placeholder="Enter last name">
+                            <input class="form-control" value="{{user.lastName}}" name="lastName" id="lastName" type="text" placeholder="Enter last name">
                         </div>
                     </div>
                 </div>
@@ -18,23 +18,19 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <label for="email">Email address</label>
-                            <input class="form-control" id="email" type="email" placeholder="Enter email">
+                            <input class="form-control" value="{{user.email}}" name="email" id="email" type="email" placeholder="Enter email">
                         </div>
                         <div class="col-md-6">
                             <label for="username">Username</label>
-                            <input class="form-control" id="username" type="text" placeholder="Username">
+                            <input class="form-control" value="{{user.username}}" id="username" type="text" readonly>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
-                            <label for="pass1">Password</label>
-                            <input class="form-control" id="pass1" type="password" placeholder="Password">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="pass2">Confirm password</label>
-                            <input class="form-control" id="pass2" type="password" placeholder="Confirm password">
+                            <label for="password">Password</label>
+                            <input class="form-control" id="password" name="password" type="password" placeholder="Password">
                         </div>
                     </div>
                 </div>

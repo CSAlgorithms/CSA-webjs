@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const autoIncrement = require('mongoose-auto-increment');
+const _ = require('lodash');
 
 var UserSchema = new mongoose.Schema({
     uid: {
@@ -10,11 +11,11 @@ var UserSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true,
         trim: true,
         unique: true,
         validate: {
             validator: function (data) {
+                if(_.isEmpty(data)) return true;
                 return validator.isEmail(data);
             },
             message: '{VALUE} is not a valid email'
