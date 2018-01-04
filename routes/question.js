@@ -45,34 +45,16 @@ router.get('/edit/:id(\\d+)', function(req, res, next) {
 
 router.post('/edit/:id(\\d+)', function(req, res, next) {
     var body = _.pick(req.body, ['title', 'score', 'description', 'outputPath', 'removeOutputPath', 'note']);
-    // Use "find then update" instead of "find and update" because outputPath is empty by default
-    Question.findOne({qid: req.params.id}).then(function(question){
+    if(_.isEmpty(body.outputPath) && !body.removeOutputPath) delete body.outputPath;
+    delete body.removeOutputPath;
+    Question.findOneAndUpdate({qid: req.params.id}, body).then(function(question){
         if(!_.isNull(question)) {
-            question.title = body.title;
-            question.score = body.score;
-            question.description = body.description;
-            question.note = body.note;
-
-            // If should remove the old file value
-            if(body.removeOutputPath && body.removeOutputPath === question.outputPath) {
-                question.outputPath = '';
-            }
-
-            // If file replaced
-            if(body.outputPath) {
-                question.outputPath = body.outputPath;
-            }
-
-            question.save().then(function(doc) {
-                res.setSuccess('Question updated successfully');
-                res.redirect('/question/edit/' + req.params.id);
-            }).catch(function (reason) {
-                res.setReason(reason);
-                res.redirect('/question/edit/' + req.params.id);
-            });
-        } else {
-            res.redirect('/question/edit/' + req.params.id);
+            res.setSuccess('Question updated successfully');
         }
+        res.redirect('/question/edit/' + req.params.id);
+    }).catch(function (reason) {
+        res.setReason(reason);
+        res.redirect('/question/edit/' + req.params.id);
     });
 });
 
