@@ -77,6 +77,7 @@ UserSchema.methods.removeToken = function(token) {
 };
 
 UserSchema.methods.findByToken = function(token) {
+    var User = this;
     try {
         var decoded = jwt.verify(token, process.env.JWT_SECRET)
         return User.findOne({
@@ -90,7 +91,22 @@ UserSchema.methods.findByToken = function(token) {
 };
 
 UserSchema.methods.findByCredentials = function(username, password) {
+    var User = this;
+    return User.findOne({username: username}).then(function(user) {
+        if(_.isNull(user)) {
+            return Promise.reject();
+        }
 
+        return new Promise(function(resolve, reject) {
+            bcrypt.compare(password, user.password, function(err, res){
+                if(res) {
+                    resolve(user);
+                } else {
+                    reject();
+                }
+            });
+        });
+    });
 };
 
 UserSchema.plugin(autoIncrement.plugin, {
@@ -118,11 +134,6 @@ UserSchema.pre('save', function(next){
     } else {
         next();
     }
-});
-
-UserSchema.pre('findOneAndUpdate', function(next) {
-    this.options.runValidators = true;
-    next();
 });
 
 module.exports.User = mongoose.model('User', UserSchema);
