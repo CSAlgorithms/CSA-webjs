@@ -80,14 +80,19 @@ router.get('/edit/:id(\\d+)', function(req, res, next) {
 router.post('/edit/:id(\\d+)', function(req, res, next) {
     var body = _.pick(req.body, ['email', 'password', 'firstName', 'lastName']);
     if(_.isEmpty(body.password)) delete body.password;
-    User.findOneAndUpdate({uid: req.params.id}, body).then(function(user){
+    User.findOne({uid: req.params.id}).then(function(user){
         if(!_.isNull(user)) {
-            res.setSuccess('Profile updated successfully');
+            user = _.extend(user, body);
+            user.save().then(function (doc) {
+                res.setSuccess('Profile updated successfully');
+                res.redirect('/user/edit/' + req.params.id);
+            }).catch(function (reason) {
+                res.setReason(reason);
+                res.redirect('/user/edit/' + req.params.id);
+            });
+        } else {
+            res.redirect('/user/edit/' + req.params.id);
         }
-        res.redirect('/user/edit/' + req.params.id);
-    }).catch(function (reason) {
-        res.setReason(reason);
-        res.redirect('/user/edit/' + req.params.id);
     });
 });
 
