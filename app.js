@@ -1,7 +1,6 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var log = require('winston');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var hbs = require('hbs');
@@ -12,15 +11,12 @@ var session = require('express-session');
 // Load env variables
 var dotenv = require('dotenv').config();
 if(_.isUndefined(dotenv.parsed)) {
-    log.error('Error loading/parsing .env file');
+    console.error('Error loading/parsing .env file');
     process.exit(1);
 }
 
 // Configure db
 require('./config/mongoose');
-
-// Configure logger
-require('./config/winston');
 
 // Configure hbs
 require('./config/hbs');
