@@ -127,9 +127,10 @@ function funcSetReason(req, res, next) {
             }
         }
 
-        if(messages.length > 0) {
-            res.setErrors(messages);
+        if(messages.length === 0) {
+            messages.push('An error occurred');
         }
+        res.setErrors(messages);
     };
     next();
 }
