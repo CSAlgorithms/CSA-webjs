@@ -7,7 +7,7 @@
             </div>
         </div>
 
-        <form style="padding-top: 50px">
+        <form style="padding-top: 50px" method="post" action="/question/submit/{{question.qid}}">
             <h4 class="card-title">Code</h4>
             <div class="form-group">
                 <label for="sel1">Programming language:</label>
@@ -20,6 +20,8 @@
             </div>
 
             <div class="col-12 editor-container">
+                <input name="question" type="hidden" value="{{question._id}}">
+                <textarea id="editor-textarea" name="code" style="display: none;"></textarea>
                 <div id="editor"></div>
             </div>
 

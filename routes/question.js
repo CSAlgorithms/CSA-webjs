@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Question = require('../models/question').Question;
 var _ = require('lodash');
+var Submission = require('../models/submission').Submission;
 
 router.get('/', function(req, res, next) {
     res.setPath([{name: 'Question', url: '/question'},{name: 'List'}]);
@@ -68,6 +69,18 @@ router.get('/view/:id(\\d+)', function(req, res, next) {
         } else {
             res.redirect404('Question not found');
         }
+    });
+});
+
+router.post('/submit/:id(\\d+)', function(req, res, next) {
+    var body = _.pick(req.body, ['question', 'code']);
+    var submission = new Submission(body);
+    submission.save().then(function(doc) {
+        res.setSuccess('Submission completed successfully');
+        res.redirect('/question/view/' + req.params.id);
+    }).catch(function(reason) {
+        res.setReason(reason);
+        res.redirectPost('/question/view/' + req.params.id);
     });
 });
 

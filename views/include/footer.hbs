@@ -66,9 +66,13 @@
         <script type="text/javascript" src="/js/ace/ace.js" charset="utf-8"></script>
         <script type="text/javascript">
             var editor = ace.edit("editor");
+            var textarea = $('#editor-textarea');
             editor.setTheme("ace/theme/github");
             editor.getSession().setMode("ace/mode/javascript");
             editor.getSession().setUseWorker(false);
+            editor.getSession().on('change', function(){
+                textarea.val(editor.getSession().getValue());
+            });
         </script>
     {{/if}}
 </div>
