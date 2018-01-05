@@ -68,9 +68,7 @@ router.get('/profile/:id(\\d+)', function(req, res, next) {
         if(!_.isNull(user)) {
             res.addData('user', user);
             res.setPath([{name: 'User'}, {name: user.username}]);
-            if(!_.isEmpty(user.firstName) || !_.isEmpty(user.lastName)) {
-                res.getData('user')['fullname'] = (user.firstName + ' ' + user.lastName).trim();
-            }
+            res.getData('user')['fullname'] = user.fullname();
             res.loadScript('heatMap');
             res.templateRender('user/profile', 'My Profile');
         } else {

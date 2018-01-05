@@ -53,6 +53,12 @@ UserSchema.methods.generateToken = function() {
     return {_id: this._id};
 };
 
+UserSchema.methods.fullname = function() {
+    if(!_.isEmpty(this.firstName) || !_.isEmpty(this.lastName)) {
+        return (this.firstName + ' ' + this.lastName).trim();
+    }
+};
+
 UserSchema.statics.findByCredentials = function(username, password) {
     var User = this;
     return User.findOne({username: username}).then(function(user) {
