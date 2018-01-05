@@ -51,7 +51,11 @@ var UserSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
-    }
+    },
+    submissions: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Submission'
+    }]
 });
 
 UserSchema.methods.generateToken = function() {
