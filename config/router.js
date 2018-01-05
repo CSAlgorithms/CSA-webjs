@@ -159,16 +159,21 @@ function funcGetData(req, res, next) {
 }
 
 function funcCookie(req, res, next) {
+    var tokenName = 'csa_token';
     res.setCSACookie = function(data) {
         if(!_.isObject(data)) {
             throw new Error('Cookie value must be an object');
         }
         var token = jwt.sign(data, process.env.JWT_SECRET).toString();
-        res.cookie('csa_token', token);
+        res.cookie(tokenName, token);
+    };
+
+    res.unsetCSACookie = function() {
+        res.cookie(tokenName, '', {expires: new Date(0)});
     };
 
     req.getCSACookie = function() {
-        var token = req.cookies['csa_token'];
+        var token = req.cookies[tokenName];
         if(!token || _.isUndefined(token)) {
             return Promise.reject();
         }

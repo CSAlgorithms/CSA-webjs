@@ -32,21 +32,24 @@
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/user/login">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/user/register">Register</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/admin">Admin</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/user/profile/1">My Profile</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/user/logout">Logout</a>
-            </li>
+            {{# if me}}
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/profile/{{me.uid}}">My Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/logout">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin">Admin</a>
+                </li>
+            {{else}}
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/register">Register</a>
+                </li>
+            {{/if}}
         </ul>
     </div>
 </nav>

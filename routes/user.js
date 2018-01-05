@@ -43,7 +43,11 @@ router.post('/login', function(req, res, next) {
         res.setErrors('Incorrect username and/or password');
         res.redirect('/user/login');
     });
+});
 
+router.get('/logout', function(req, res, next) {
+    res.unsetCSACookie();
+    res.redirect('/user/login');
 });
 
 router.get('/register', function(req, res, next) {
