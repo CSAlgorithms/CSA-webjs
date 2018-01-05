@@ -1,5 +1,6 @@
-var Global = require('../models/global').Global;
+const Global = require('../models/global').Global;
 const _ = require('lodash');
+const jwt = require('jsonwebtoken');
 
 function init(req, res, next) {
     res.data = {};
@@ -157,6 +158,32 @@ function funcGetData(req, res, next) {
     next();
 }
 
+function funcCookie(req, res, next) {
+    res.setCSACookie = function(data) {
+        if(!_.isObject(data)) {
+            throw new Error('Cookie value must be an object');
+        }
+        var token = jwt.sign(data, process.env.JWT_SECRET).toString();
+        res.cookie('csa_token', token);
+    };
+
+    req.getCSACookie = function() {
+        var token = req.cookies['csa_token'];
+        if(!token || _.isUndefined(token)) {
+            return Promise.reject();
+        }
+
+        return new Promise(function(resolve, reject) {
+            try{
+                resolve(jwt.verify(token, process.env.JWT_SECRET));
+            } catch (e) {
+                reject();
+            }
+        });
+    };
+    next();
+}
+
 module.exports.init = init;
 module.exports.global = global;
 module.exports.funcTemplateRender = funcTemplateRender;
@@ -169,3 +196,4 @@ module.exports.funcSetSuccess = funcSetSuccess;
 module.exports.funcRedirectPost = funcRedirectPost;
 module.exports.funcAddData = funcAddData;
 module.exports.funcGetData = funcGetData;
+module.exports.funcCookie = funcCookie;

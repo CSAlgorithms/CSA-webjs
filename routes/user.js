@@ -33,6 +33,19 @@ router.get('/login', function(req, res, next) {
     res.templateRender('user/login', 'Login');
 });
 
+router.post('/login', function(req, res, next) {
+    var body = _.pick(req.body, ['username', 'password']);
+    User.findByCredentials(body.username, body.password).then(function(user){
+        var token = user.generateToken();
+        res.setCSACookie(token);
+        res.redirect('/user/profile/' + user.uid);
+    }).catch(function() {
+        res.setErrors('Incorrect username and/or password');
+        res.redirect('/user/login');
+    });
+
+});
+
 router.get('/register', function(req, res, next) {
     res.setPath([{name: 'User'},{name: 'Register'}]);
     res.templateRender('user/register', 'Register');
@@ -42,7 +55,8 @@ router.post('/register', function (req, res) {
     var body = _.pick(req.body, ['email', 'username', 'password', 'firstName', 'lastName']);
     var user = new User(body);
     user.save().then(function (doc) {
-        res.redirect('/user/profile/' + doc.uid);
+        res.setSuccess('Your account was created successfully');
+        res.redirect('/user/login');
     }).catch(function (reason) {
         res.setReason(reason);
         res.redirectPost('/user/register');
