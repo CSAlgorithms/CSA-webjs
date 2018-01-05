@@ -111,8 +111,11 @@ router.post('/edit/:id(\\d+)', auth.loggedin, function(req, res, next) {
         return;
     }
 
-    var body = _.pick(req.body, ['email', 'password', 'firstName', 'lastName']);
+    var postArray = ['email', 'password', 'firstName', 'lastName'];
+    if(me.admin) postArray.push('admin');
+    var body = _.pick(req.body, postArray);
     if(_.isEmpty(body.password)) delete body.password;
+
     // Note: Do not replace this by findOneAndUpdate because of the user scheme pre hook
     User.findOne({uid: req.params.id}).then(function(user){
         if(!_.isNull(user)) {

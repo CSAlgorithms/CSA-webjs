@@ -20,18 +20,31 @@
                             <label for="email">Email address</label>
                             <input class="form-control" value="{{user.email}}" name="email" id="email" type="text" placeholder="Enter email">
                         </div>
-                        <div class="col-md-6">
-                            <label for="username">Username</label>
-                            <input class="form-control" value="{{user.username}}" id="username" type="text" readonly>
-                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
+                            <label for="username">Username</label>
+                            <input class="form-control" value="{{user.username}}" id="username" type="text" readonly>
+                        </div>
+                        <div class="col-md-6">
                             <label for="password">Password</label>
                             <input class="form-control" id="password" name="password" type="password" placeholder="Password">
                         </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            {{# if me.admin}}
+                                {{# if user.admin}}
+                                    <input name="admin" value="false" type="checkbox" class="form-check-input"> Remove admin
+                                {{else}}
+                                    <input name="admin" value="true" type="checkbox" class="form-check-input"> Make admin
+                                {{/if}}
+                            {{/if}}
+                        </label>
                     </div>
                 </div>
                 <input type="submit" class="btn btn-primary" value="Save">
