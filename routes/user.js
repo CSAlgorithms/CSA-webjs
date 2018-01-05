@@ -113,4 +113,28 @@ router.post('/edit/:id(\\d+)', function(req, res, next) {
     });
 });
 
+router.get('/admin', function(req, res, next) {
+    User.find({admin: true}).then(function(admins) {
+        if(admins.length === 0) {
+            User.find({}).then(function(users){
+                res.addData('users', users);
+                res.templateRender('user/admin', 'Set admin');
+            });
+        } else {
+            res.redirect404('Page not found');
+        }
+    });
+});
+
+router.post('/admin', function(req, res, next) {
+    User.find({admin: true}).then(function(admins) {
+        if(admins.length === 0) {
+            var body = _.pick(req.body, ['id']);
+            User.findOneAndUpdate({_id: body.id}, {admin: true}).then(function(user) {
+                res.redirect('/');
+            });
+        }
+    });
+});
+
 module.exports = router;

@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="card card-login mx-auto mt-5">
+        <div class="card-body">
+            <div class="text-center mt-4 mb-5">
+                <h4>Set admin</h4>
+            </div>
+            <form method="post">
+                <div align="center">
+                    <p class="col-12"><em>This page will not be accessible after setting an admin</em></p>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <select name="id" class="form-control" id="sel1">
+                                {{# each users}}
+                                    <option value="{{this._id}}">{{this.username}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    <input class="btn btn-primary btn-block" type="submit" value="Make admin"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
