@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user').User;
 var _ = require('lodash');
+var auth = require('../config/auth');
 
 router.get('/', function(req, res, next) {
     res.setPath([{name: 'User'},{name: 'List'}]);
@@ -81,7 +82,15 @@ router.get('/profile/:id(\\d+)', function(req, res, next) {
     });
 });
 
-router.get('/edit/:id(\\d+)', function(req, res, next) {
+router.get('/edit/:id(\\d+)', auth.loggedin, function(req, res, next) {
+
+    // Verify user is logged in or user is an admin
+    var me = res.getData('me');
+    if(!me.admin && me.uid !== parseInt(req.params.id)) {
+        res.redirect404('Page not found');
+        return;
+    }
+
     User.findOne({uid: req.params.id}).then(function(user){
         if(_.isNull(user)) {
             res.redirect404('User not found');
@@ -93,7 +102,15 @@ router.get('/edit/:id(\\d+)', function(req, res, next) {
     });
 });
 
-router.post('/edit/:id(\\d+)', function(req, res, next) {
+router.post('/edit/:id(\\d+)', auth.loggedin, function(req, res, next) {
+
+    // Verify user is logged in or user is an admin
+    var me = res.getData('me');
+    if(!me.admin && me.uid !== parseInt(req.params.id)) {
+        res.redirect404('Page not found');
+        return;
+    }
+
     var body = _.pick(req.body, ['email', 'password', 'firstName', 'lastName']);
     if(_.isEmpty(body.password)) delete body.password;
     // Note: Do not replace this by findOneAndUpdate because of the user scheme pre hook
@@ -113,7 +130,7 @@ router.post('/edit/:id(\\d+)', function(req, res, next) {
     });
 });
 
-router.get('/admin', function(req, res, next) {
+router.get('/admin', auth.loggedin, function(req, res, next) {
     User.find({admin: true}).then(function(admins) {
         if(admins.length === 0) {
             User.find({}).then(function(users){
@@ -126,7 +143,7 @@ router.get('/admin', function(req, res, next) {
     });
 });
 
-router.post('/admin', function(req, res, next) {
+router.post('/admin', auth.loggedin, function(req, res, next) {
     User.find({admin: true}).then(function(admins) {
         if(admins.length === 0) {
             var body = _.pick(req.body, ['id']);
