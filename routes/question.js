@@ -3,6 +3,7 @@ var router = express.Router();
 var Question = require('../models/question').Question;
 var _ = require('lodash');
 var auth = require('../config/auth');
+var Language = require('../models/language').Language;
 
 router.get('/', function(req, res, next) {
     res.setPath([{name: 'Question', url: '/question'},{name: 'List'}]);
@@ -63,9 +64,12 @@ router.get('/view/:id(\\d+)', function(req, res, next) {
     res.loadScript('ace');
     Question.findOne({qid: req.params.id}).then(function(question) {
         if(!_.isNull(question)) {
-            res.setPath([{name: 'Question', url: '/question'}, {name: 'View'}]);
-            res.addData('question', question);
-            res.templateRender('question/view', 'View question');
+            Language.find({}).then(function(languages) {
+                res.setPath([{name: 'Question', url: '/question'}, {name: 'View'}]);
+                res.addData('question', question);
+                res.addData('languages', languages);
+                res.templateRender('question/view', 'View question');
+            });
         } else {
             res.redirect404('Question not found');
         }

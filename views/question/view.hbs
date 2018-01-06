@@ -13,10 +13,9 @@
                 <div class="form-group">
                     <label for="language">Programming language</label>
                     <select name="type.manual.language" class="form-control" id="language">
-                        <option>Java</option>
-                        <option>C</option>
-                        <option>C++</option>
-                        <option>Python 2</option>
+                        {{# each languages}}
+                            <option value="{{this.valueName}}">{{this.displayName}}</option>
+                        {{/each}}
                     </select>
                 </div>
 

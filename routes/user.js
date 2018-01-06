@@ -4,7 +4,7 @@ var User = require('../models/user').User;
 var _ = require('lodash');
 var auth = require('../config/auth');
 
-router.get('/', function(req, res, next) {
+router.get('/', auth.admin, function(req, res, next) {
     res.setPath([{name: 'User'},{name: 'List'}]);
     res.loadScript('dataTable');
     User.find({}).then(function(users) {
