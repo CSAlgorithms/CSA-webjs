@@ -3,6 +3,7 @@ var router = express.Router();
 var Question = require('../models/question').Question;
 var _ = require('lodash');
 var Submission = require('../models/submission').Submission;
+var auth = require('../config/auth');
 
 router.get('/', function(req, res, next) {
     res.setPath([{name: 'Question', url: '/question'},{name: 'List'}]);
@@ -72,8 +73,10 @@ router.get('/view/:id(\\d+)', function(req, res, next) {
     });
 });
 
-router.post('/submit/:id(\\d+)', function(req, res, next) {
+router.post('/submit/:id(\\d+)', auth.loggedin, function(req, res, next) {
+    var me = res.getData('me');
     var body = _.pick(req.body, ['question', 'code']);
+    body.user = me._id;
     var submission = new Submission(body);
     submission.save().then(function(doc) {
         res.setSuccess('Submission completed successfully');

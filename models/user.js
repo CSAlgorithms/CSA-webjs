@@ -51,11 +51,7 @@ var UserSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
-    },
-    submissions: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Submission'
-    }]
+    }
 });
 
 UserSchema.methods.generateToken = function() {
@@ -98,6 +94,12 @@ UserSchema.virtual('events', {
     ref: 'Event',
     localField: '_id',
     foreignField: 'members'
+});
+
+UserSchema.virtual('submissions', {
+    ref: 'Submission',
+    localField: '_id',
+    foreignField: 'user'
 });
 
 UserSchema.pre('save', function(next){

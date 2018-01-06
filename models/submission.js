@@ -11,15 +11,13 @@ var SubmissionSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Question'
     },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     code: {
         type: String
     }
-});
-
-SubmissionSchema.virtual('user', {
-    ref: 'User',
-    localField: '_id',
-    foreignField: 'submissions'
 });
 
 SubmissionSchema.plugin(autoIncrement.plugin, {
