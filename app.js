@@ -26,6 +26,7 @@ var index = require('./routes/index');
 var user = require('./routes/user');
 var event = require('./routes/event');
 var question = require('./routes/question');
+var submission = require('./routes/submission');
 var admin = require('./routes/admin');
 var ajaxEvent = require('./routes/ajax/event');
 
@@ -75,6 +76,7 @@ app.use('/', index);
 app.use('/user', user);
 app.use('/event', event);
 app.use('/question', question);
+app.use('/submission', submission);
 app.use('/admin', admin);
 app.use('/ajax/event', ajaxEvent);
 

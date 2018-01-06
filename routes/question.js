@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var Question = require('../models/question').Question;
 var _ = require('lodash');
-var Submission = require('../models/submission').Submission;
 var auth = require('../config/auth');
 
 router.get('/', function(req, res, next) {
@@ -14,13 +13,13 @@ router.get('/', function(req, res, next) {
     });
 });
 
-router.get('/add', function(req, res, next) {
+router.get('/add', auth.admin, function(req, res, next) {
     res.setPath([{name: 'Question', url: '/question'},{name: 'Add'}]);
     res.loadScript('ckeditor');
     res.templateRender('question/add', 'Add question');
 });
 
-router.post('/add', function(req, res, next) {
+router.post('/add', auth.admin, function(req, res, next) {
     var body = _.pick(req.body, ['title', 'score', 'description', 'outputPath', 'note']);
     var question = new Question(body);
     question.save().then(function (doc) {
@@ -32,7 +31,7 @@ router.post('/add', function(req, res, next) {
     });
 });
 
-router.get('/edit/:id(\\d+)', function(req, res, next) {
+router.get('/edit/:id(\\d+)', auth.admin, function(req, res, next) {
     Question.findOne({qid: req.params.id}).then(function(question){
         if(!_.isNull(question)) {
             res.setPath([{name: 'Question', url: '/question'},{name: 'Question'}, {name: 'Edit'}]);
@@ -45,7 +44,7 @@ router.get('/edit/:id(\\d+)', function(req, res, next) {
     });
 });
 
-router.post('/edit/:id(\\d+)', function(req, res, next) {
+router.post('/edit/:id(\\d+)', auth.admin, function(req, res, next) {
     var body = _.pick(req.body, ['title', 'score', 'description', 'outputPath', 'removeOutputPath', 'note']);
     if(_.isEmpty(body.outputPath) && !body.removeOutputPath) delete body.outputPath;
     delete body.removeOutputPath;
@@ -70,28 +69,6 @@ router.get('/view/:id(\\d+)', function(req, res, next) {
         } else {
             res.redirect404('Question not found');
         }
-    });
-});
-
-router.post('/submit/:id(\\d+)', auth.loggedin, function(req, res, next) {
-    var me = res.getData('me');
-    var body = _.pick(req.body, ['question', 'code']);
-    body.user = me._id;
-    var submission = new Submission(body);
-    submission.save().then(function(doc) {
-        res.setSuccess('Submission completed successfully');
-        res.redirect('/question/view/' + req.params.id);
-    }).catch(function(reason) {
-        res.setReason(reason);
-        res.redirectPost('/question/view/' + req.params.id);
-    });
-});
-
-router.get('/submissions/:id(\\d+)', auth.loggedin, function(req, res, next) {
-    var me = res.getData('me');
-    Submission.find({user: me._id}).populate('question').then(function(submissions) {
-        res.addData('submissions', submissions);
-        res.templateRender('question/submissions', 'My submissions');
     });
 });
 
