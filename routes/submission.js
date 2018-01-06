@@ -15,8 +15,23 @@ router.get('/question/:id(\\d+)', auth.loggedin, function(req, res, next) {
 
 router.post('/submit/:id(\\d+)', auth.loggedin, function(req, res, next) {
     var me = res.getData('me');
-    var body = _.pick(req.body, ['question', 'code']);
+    var constant = res.getData('g_constant');
+    var submissionType = res.getData('g_submissionType');
+    var pickArray = ['question'];
+    if(submissionType === constant.SUBMIT_TYPE_MANUAL) {
+        pickArray.push('type.manual.language');
+        pickArray.push('type.manual.code');
+    } else if(submissionType === constant.SUBMIT_TYPE_COMPARE) {
+        pickArray.push('type.compare.output');
+    } else if(submissionType === constant.SUBMIT_TYPE_DOCKER) {
+        pickArray.push('type.docker.language');
+        pickArray.push('type.docker.code');
+    } else {
+        throw new Error('Unknown submission type');
+    }
+    var body = _.pick(req.body, pickArray);
     body.user = me._id;
+    body.typeName = res.getData('g_submissionType');
     var submission = new Submission(body);
     submission.save().then(function(doc) {
         res.setSuccess('Submission completed successfully');

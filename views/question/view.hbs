@@ -7,28 +7,29 @@
             </div>
         </div>
 
-        <form style="padding-top: 50px" method="post" action="/submission/submit/{{question.qid}}">
-            <h4 class="card-title">Code</h4>
-            <div class="form-group">
-                <label for="sel1">Programming language:</label>
-                <select class="form-control" id="sel1">
-                    <option>Java</option>
-                    <option>C</option>
-                    <option>C++</option>
-                    <option>Python 2</option>
-                </select>
-            </div>
+        {{# equals g_submissionType g_constant.SUBMIT_TYPE_MANUAL}}
+            <form style="padding-top: 50px" method="post" action="/submission/submit/{{question.qid}}">
+                <h4 class="card-title">Code</h4>
+                <div class="form-group">
+                    <label for="language">Programming language</label>
+                    <select name="type.manual.language" class="form-control" id="language">
+                        <option>Java</option>
+                        <option>C</option>
+                        <option>C++</option>
+                        <option>Python 2</option>
+                    </select>
+                </div>
 
-            <div class="col-12 editor-container">
-                <input name="question" type="hidden" value="{{question._id}}">
-                <textarea id="editor-textarea" name="code" style="display: none;"></textarea>
-                <div id="editor"></div>
-            </div>
+                <div class="col-12 editor-container">
+                    <input name="question" type="hidden" value="{{question._id}}">
+                    <textarea id="editor-textarea" name="type.manual.code" style="display: none;"></textarea>
+                    <div id="editor"></div>
+                </div>
 
-            <div class="col-12 editor-btn">
-                <button type="submit" class="btn btn-primary">Batch test</button>
-                <button type="submit" class="btn btn-secondary">Submit</button>
-            </div>
-        </form>
+                <div class="col-12 editor-btn">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        {{/equals}}
     </div>
 </div>

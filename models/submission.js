@@ -20,8 +20,32 @@ var SubmissionSchema = new mongoose.Schema({
         ref: 'Event',
         default: null
     },
-    code: {
-        type: String
+    typeName: {
+        type: String,
+        required: true
+    },
+    type: {
+        manual: {
+            language: {
+                type: String
+            },
+            code: {
+                type: String
+            }
+        },
+        compare: {
+            output: {
+                type: String
+            }
+        },
+        docker: {
+            language: {
+                type: String
+            },
+            code: {
+                type: String
+            }
+        }
     }
 });
 
