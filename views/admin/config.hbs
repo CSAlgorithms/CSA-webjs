@@ -22,6 +22,15 @@
                     All website visitors will see this message
                 </small>
             </div>
+
+            <div class="form-group">
+                <label for="submission-type">Submission type</label>
+                <select name="submissionType" class="form-control" id="submission-type">
+                    <option value="manual" selected>Manual verification</option>
+                    <option value="compare">Output comparison</option>
+                    <option value="docker">Docker</option>
+                </select>
+            </div>
             <button type="submit" class="btn btn-primary">Save</button>
         </form>
     </div>

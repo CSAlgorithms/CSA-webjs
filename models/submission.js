@@ -15,6 +15,11 @@ var SubmissionSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
+    event: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Event',
+        default: null
+    },
     code: {
         type: String
     }
