@@ -1,0 +1,25 @@
+<div class="card mb-3">
+    <div class="card-body">
+        <h5 class="col-12">
+            <a href="/language/add"><li class="fa fa-plus"></li> Add language</a>
+        </h5>
+        <div class="table-responsive">
+            <table class="table table-bordered dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Language</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {{# each languages}}
+                    <tr>
+                        <td>{{this.displayName}}</td>
+                        <td><a href="/language/edit/{{this._id}}">edit</a></td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
