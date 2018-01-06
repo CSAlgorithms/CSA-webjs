@@ -1,0 +1,26 @@
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Submitted</th>
+                    <th>Accepted</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {{# each submissions}}
+                    <tr>
+                        <td>{{this.sid}}</td>
+                        <td></td>
+                        <td></td>
+                        <td><a href="/submission/view/{{this.sid}}">view</a></td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -87,4 +87,12 @@ router.post('/submit/:id(\\d+)', auth.loggedin, function(req, res, next) {
     });
 });
 
+router.get('/submissions/:id(\\d+)', auth.loggedin, function(req, res, next) {
+    var me = res.getData('me');
+    Submission.find({user: me._id}).populate('question').then(function(submissions) {
+        res.addData('submissions', submissions);
+        res.templateRender('question/submissions', 'My submissions');
+    });
+});
+
 module.exports = router;
