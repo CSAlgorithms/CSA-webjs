@@ -26,9 +26,9 @@
             <div class="form-group">
                 <label for="submission-type">Submission type</label>
                 <select name="submissionType" class="form-control" id="submission-type">
-                    <option value="manual" selected>Manual verification</option>
-                    <option value="compare">Output comparison</option>
-                    <option value="docker">Docker</option>
+                    <option value="{{g_constant.SUBMIT_TYPE_MANUAL}}" selected>Manual verification</option>
+                    <option value="{{g_constant.SUBMIT_TYPE_COMPARE}}">Output comparison</option>
+                    <option value="{{g_constant.SUBMIT_TYPE_DOCKER}}">Docker</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Save</button>

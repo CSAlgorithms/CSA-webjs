@@ -56,6 +56,7 @@ app.use(flash());
 // Load website configuration
 var routers = require('./config/router');
 var auth = require('./config/auth');
+var constants = require('./config/constants');
 app.use(routers.init);
 app.use(routers.funcAddData);
 app.use(routers.funcGetData);
@@ -69,6 +70,7 @@ app.use(routers.funcSetSuccess);
 app.use(routers.funcRedirectPost);
 app.use(routers.funcCookie)
 app.use(routers.global);
+app.use(constants.loadConstants);
 app.use(auth.authenticate);
 
 // Register routes

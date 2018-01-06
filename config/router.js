@@ -189,6 +189,10 @@ function funcCookie(req, res, next) {
     next();
 }
 
+function loadConstants(req, res, next) {
+    res.addData('constants', require('constants'));
+}
+
 module.exports.init = init;
 module.exports.global = global;
 module.exports.funcTemplateRender = funcTemplateRender;
