@@ -29,6 +29,9 @@ var GlobalSchema = new mongoose.Schema({
     notification: {
         type: String,
         trim: true
+    },
+    submissionType: {
+        type: String
     }
 });
 

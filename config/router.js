@@ -9,6 +9,7 @@ function init(req, res, next) {
 
 function global(req, res, next) {
     res.addData('g_webName', '{{CSAlgorithms}}');
+    res.addData('g_submissionType', res.getData('g_constant')['SUBMIT_TYPE_MANUAL']);
     Global.find({}).then(function (global) {
         if(global.length > 0) {
             global = global.pop();
@@ -20,6 +21,9 @@ function global(req, res, next) {
             }
             if(!_.isEmpty(global.notification)) {
                 res.addData('g_notification', global.notification);
+            }
+            if(!_.isEmpty(global.submissionType)) {
+                res.addData('g_submissionType', global.submissionType);
             }
         }
         next();

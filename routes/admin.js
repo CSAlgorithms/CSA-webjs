@@ -10,7 +10,7 @@ router.get('/config', auth.admin, function(req, res, next) {
 });
 
 router.post('/config', auth.admin, function(req, res, next) {
-    var body = _.pick(req.body, ['webName', 'contactEmail', 'notification']);
+    var body = _.pick(req.body, ['webName', 'contactEmail', 'notification', 'submissionType']);
     Global.update({}, body, {upsert: true}).then(function (doc) {
         res.setSuccess('Configuration updated successfully');
         res.redirect('/admin/config');

@@ -69,8 +69,8 @@ app.use(routers.funcSetReason);
 app.use(routers.funcSetSuccess);
 app.use(routers.funcRedirectPost);
 app.use(routers.funcCookie)
-app.use(routers.global);
 app.use(constants.loadConstants);
+app.use(routers.global);
 app.use(auth.authenticate);
 
 // Register routes
