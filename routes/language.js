@@ -19,7 +19,7 @@ router.get('/add', auth.admin, function(req, res, next) {
 });
 
 router.post('/add', auth.admin, function(req, res, next) {
-    var body = _.pick(req.body, ['valueName', 'displayName']);
+    var body = _.pick(req.body, ['displayName']);
     var language = new Language(body);
     language.save().then(function(doc) {
         res.setSuccess('Language added successfully');
@@ -43,7 +43,7 @@ router.get('/edit/:id', auth.admin, function(req, res, next) {
 });
 
 router.post('/edit/:id', auth.admin, function(req, res, next) {
-    var body = _.pick(req.body, ['valueName', 'displayName']);
+    var body = _.pick(req.body, ['displayName']);
     Language.findOneAndUpdate({_id: req.params.id}, body).then(function(language) {
         if(_.isNull(language)) {
             res.redirect404('Language not found');

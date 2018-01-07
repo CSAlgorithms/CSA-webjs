@@ -27,7 +27,8 @@ var SubmissionSchema = new mongoose.Schema({
     type: {
         manual: {
             language: {
-                type: String
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Language'
             },
             code: {
                 type: String
@@ -40,7 +41,8 @@ var SubmissionSchema = new mongoose.Schema({
         },
         docker: {
             language: {
-                type: String
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Language'
             },
             code: {
                 type: String
