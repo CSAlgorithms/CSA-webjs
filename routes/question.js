@@ -8,7 +8,7 @@ var Language = require('../models/language').Language;
 router.get('/', function(req, res, next) {
     res.setPath([{name: 'Question', url: '/question'},{name: 'List'}]);
     res.loadScript('dataTable');
-    Question.find({}).then(function (questions) {
+    Question.find({}).populate('submissions').then(function (questions) {
         res.addData('questions', questions);
         res.templateRender('question/list', 'All questions');
     });

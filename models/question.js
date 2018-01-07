@@ -41,6 +41,12 @@ QuestionSchema.virtual('events', {
     foreignField: 'questions'
 });
 
+QuestionSchema.virtual('submissions', {
+    ref: 'Submission',
+    localField: '_id',
+    foreignField: 'question'
+});
+
 QuestionSchema.pre('findOneAndUpdate', function(next) {
     this.options.runValidators = true;
     next();
