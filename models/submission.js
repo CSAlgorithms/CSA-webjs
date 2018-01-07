@@ -32,6 +32,10 @@ var SubmissionSchema = new mongoose.Schema({
             },
             code: {
                 type: String
+            },
+            approved: {
+                type: Boolean,
+                default: false
             }
         },
         compare: {

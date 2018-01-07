@@ -1,0 +1,28 @@
+<div class="card mb-3">
+    <div class="card-body">
+        <h3 class="card-title">Pending submissions</h3>
+        <h5 class="card-title"><em>Only submissions of type MANUAL are listed in this page</em></h5>
+        <div class="table-responsive">
+            <table class="table table-bordered dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Question</th>
+                    <th>User</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {{# each submissions}}
+                    <tr>
+                        <td>{{this.sid}}</td>
+                        <td>{{this.question.title}}</td>
+                        <td>{{this.user.username}}</td>
+                        <td><a href="/submission/view/{{this.sid}}">view</a></td>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
