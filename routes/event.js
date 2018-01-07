@@ -21,7 +21,7 @@ router.get('/add', function(req, res, next) {
 });
 
 router.post('/add', function(req, res, next) {
-    var body = _.pick(req.body, ['title', 'description', 'startAt', 'endAt']);
+    var body = _.pick(req.body, ['title', 'description', 'location', 'startAt', 'endAt']);
     var event = new Event(body);
     event.save().then(function (doc) {
         res.setSuccess('Event added successfully');
@@ -58,7 +58,7 @@ router.get('/edit/:id(\\d+)', function(req, res, next) {
 });
 
 router.post('/edit/:id(\\d+)', function(req, res, next) {
-    var body = _.pick(req.body, ['title', 'description', 'startAt', 'endAt']);
+    var body = _.pick(req.body, ['title', 'description', 'location', 'startAt', 'endAt']);
     Event.findOneAndUpdate({eid: req.params.id}, body).then(function(event){
         if(_.isNull(event)) {
             res.redirect('/event/edit/' + req.params.id);

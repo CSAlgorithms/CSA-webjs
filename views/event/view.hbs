@@ -1,25 +1,10 @@
 <div class="card">
     <div class="card-body">
         <h3 class="card-title">{{event.eid}} - {{event.title}}</h3>
-        <small class="form-text text-muted">{{formatDateTime event.startAt 'llll'}} - {{formatDateTime event.endAt 'llll'}}</small>
+        <small class="form-text text-muted"><b>{{event.location}}</b> - {{formatDateTime event.startAt 'llll'}} - {{formatDateTime event.endAt 'llll'}}</small>
         <div class="row">
             <div class="col-12" style="padding: 30px">
                 {{{event.description}}}
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-12">
-                <h3 class="card-title">Questions</h3>
-                <ul class="list-group">
-                    {{# if event.questions}}
-                        {{# each event.questions}}
-                            <li class="list-group-item"><a href="/question/view/{{this.qid}}">{{this.title}}</a></li>
-                        {{/each}}
-                    {{else}}
-                        <li class="list-group-item"><em>No questions found</em></li>
-                    {{/if}}
-                </ul>
             </div>
         </div>
 
@@ -34,6 +19,36 @@
                 </div>
             </div>
         {{/if}}
+
+        <div class="row" style="padding-top: 25px">
+            <div class="col-12">
+                <h3 class="card-title">Questions</h3>
+                <ul class="list-group">
+                    {{# if event.questions}}
+                        {{# each event.questions}}
+                            <li class="list-group-item"><a href="/question/view/{{this.qid}}">{{this.title}}</a></li>
+                        {{/each}}
+                    {{else}}
+                        <li class="list-group-item"><em>No questions found</em></li>
+                    {{/if}}
+                </ul>
+            </div>
+        </div>
+
+        <div class="row" style="padding-top: 25px">
+            <div class="col-12">
+                <h3 class="card-title">Members</h3>
+                <ul class="list-group">
+                    {{# if event.members}}
+                        {{# each event.members}}
+                            <li class="list-group-item">{{this.username}}</li>
+                        {{/each}}
+                    {{else}}
+                        <li class="list-group-item"><em>Be the first to join this event</em></li>
+                    {{/if}}
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 
