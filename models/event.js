@@ -57,4 +57,32 @@ EventSchema.pre('findOneAndUpdate', function(next) {
     next();
 });
 
+EventSchema.methods.isMember = function(user) {
+    var event = this;
+    return new Promise(function(resolve, reject) {
+        if(!user || _.isUndefined(user) || _.isNull(user)) {
+            resolve(false);
+            return;
+        }
+
+        for(var i =0; i < event.members.length; i++) {
+
+            // Handle case of populated 'members' attribute
+            var _id;
+            if(event.members[i] instanceof mongoose.Types.ObjectId) {
+                _id = event.members[i];
+            } else {
+                _id = event.members[i]._id;
+            }
+
+            if(user._id.toString() === _id.toString()) {
+                resolve(true);
+                return;
+            }
+        }
+
+        resolve(false);
+    });
+};
+
 module.exports.Event = mongoose.model('Event', EventSchema);

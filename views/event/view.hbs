@@ -23,13 +23,48 @@
             </div>
         </div>
 
-        <div class="row" style="padding-top: 20px">
-            <div class="col-12">
-                <a class="btn btn-primary" href="/event/join/1">Join / Leave</a>
-                <small id="fileHelp" class="form-text text-muted">
-                    If you leave an event your score wil lbe reset to zero
-                </small>
+        {{# if me}}
+            <div class="row" style="padding-top: 20px">
+                <div class="col-12">
+                    {{# if isMember}}
+                        <button onclick="return leaveEvent(this)" class="btn btn-primary">Leave event</button>
+                    {{else}}
+                        <button onclick="return joinEvent(this)" class="btn btn-primary">Join event</button>
+                    {{/if}}
+                </div>
             </div>
-        </div>
+        {{/if}}
     </div>
 </div>
+
+<script>
+    function joinEvent(dom) {
+        $.post( "/ajax/event/join", {e_id: "{{event.id}}" })
+                .done(function( data ) {
+                    console.log('Join event function returned: ', data);
+                    if(data.code === 200) {
+                        console.log('Joined event');
+                        dom.innerText= 'Leave event';
+                        dom.onclick = function() { return leaveEvent(dom);}
+                    } else {
+                        console.error('Error joining event');
+                    }
+                });
+        return false;
+    }
+
+    function leaveEvent(dom) {
+        $.post( "/ajax/event/leave", {e_id: "{{event.id}}" })
+                .done(function( data ) {
+                    console.log('Leave event function returned: ', data);
+                    if(data.code === 200) {
+                        console.log('Left event');
+                        dom.innerText = 'Join event';
+                        dom.onclick = function() { return joinEvent(dom);};
+                    } else {
+                        console.error('Error leaving event');
+                    }
+                });
+        return false;
+    }
+</script>

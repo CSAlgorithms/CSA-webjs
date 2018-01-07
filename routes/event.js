@@ -73,11 +73,15 @@ router.post('/edit/:id(\\d+)', function(req, res, next) {
 });
 
 router.get('/view/:id(\\d+)', function(req, res, next) {
-    Event.findOne({eid: req.params.id}).populate('questions').then(function (event) {
+    Event.findOne({eid: req.params.id}).populate('questions').populate('members').then(function (event) {
         if(!_.isNull(event)) {
-            res.setPath([{name: 'Event', url: '/event'},{name: 'Date'}, {name: 'View'}]);
-            res.addData('event', event);
-            res.templateRender('event/view', 'View event');
+            var me = res.getData('me');
+            event.isMember(me).then(function(isMember) {
+                res.setPath([{name: 'Event', url: '/event'},{name: 'Date'}, {name: 'View'}]);
+                res.addData('event', event);
+                res.addData('isMember', isMember);
+                res.templateRender('event/view', 'View event');
+            });
         } else {
             res.redirect404('Event not found');
         }
