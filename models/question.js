@@ -25,6 +25,10 @@ var QuestionSchema = new mongoose.Schema({
     },
     note: {
         type: String
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 });
 

@@ -9,6 +9,7 @@
                     <th>ID</th>
                     <th>Question</th>
                     <th>User</th>
+                    <th>Date</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -16,8 +17,9 @@
                 {{# each submissions}}
                     <tr>
                         <td>{{this.sid}}</td>
-                        <td>{{this.question.title}}</td>
+                        <td><a href="/question/view/{{this.question.qid}}">{{this.question.title}}</a></td>
                         <td>{{this.user.username}}</td>
+                        <td>{{this.createdAt}}</td>
                         <td><a href="/submission/view/{{this.sid}}">view</a></td>
                     </tr>
                 {{/each}}

@@ -46,7 +46,11 @@ var EventSchema = new mongoose.Schema({
     members: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }]
+    }],
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 EventSchema.plugin(autoIncrement.plugin, {

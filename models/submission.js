@@ -52,6 +52,10 @@ var SubmissionSchema = new mongoose.Schema({
                 type: String
             }
         }
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 });
 

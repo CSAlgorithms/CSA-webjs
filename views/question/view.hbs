@@ -8,27 +8,31 @@
         </div>
 
         {{# equals g_submissionType g_constant.SUBMIT_TYPE_MANUAL}}
-            <form style="padding-top: 50px" method="post" action="/submission/submit/{{question.qid}}">
-                <h4 class="card-title">Code</h4>
-                <div class="form-group">
-                    <label for="language">Programming language</label>
-                    <select name="type.manual.language" class="form-control" id="language">
-                        {{# each languages}}
-                            <option value="{{this._id}}">{{this.displayName}}</option>
-                        {{/each}}
-                    </select>
-                </div>
+            {{# if languages}}
+                <form style="padding-top: 50px" method="post" action="/submission/submit/{{question.qid}}">
+                    <h4 class="card-title">Code</h4>
+                    <div class="form-group">
+                        <label for="language">Programming language</label>
+                        <select name="type.manual.language" class="form-control" id="language">
+                            {{# each languages}}
+                                <option value="{{this._id}}">{{this.displayName}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
 
-                <div class="col-12 editor-container">
-                    <input name="question" type="hidden" value="{{question._id}}">
-                    <textarea id="editor-textarea" name="type.manual.code" style="display: none;"></textarea>
-                    <div id="editor"></div>
-                </div>
+                    <div class="col-12 editor-container">
+                        <input name="question" type="hidden" value="{{question._id}}">
+                        <textarea id="editor-textarea" name="type.manual.code" style="display: none;"></textarea>
+                        <div id="editor"></div>
+                    </div>
 
-                <div class="col-12 editor-btn">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
+                    <div class="col-12 editor-btn">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            {{else}}
+                <p><em>You cannot submit a solution because no programming language is available in the system</em></p>
+            {{/if}}
         {{/equals}}
     </div>
 </div>
