@@ -34,10 +34,12 @@ var SubmissionSchema = new mongoose.Schema({
 var ManualSubmissionSchema = new mongoose.Schema({
     language: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Language'
+        ref: 'Language',
+        required: true
     },
     code: {
-        type: String
+        type: String,
+        required: true
     },
     approved: {
         type: Boolean,
@@ -47,17 +49,20 @@ var ManualSubmissionSchema = new mongoose.Schema({
 
 var CompareSubmissionSchema = new mongoose.Schema({
     output: {
-        type: String
+        type: String,
+        required: true
     }
 });
 
 var DockerSubmissionSchema = new mongoose.Schema({
     language: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Language'
+        ref: 'Language',
+        required: true
     },
     code: {
-        type: String
+        type: String,
+        required: true
     }
 });
 
@@ -67,6 +72,25 @@ SubmissionSchema.plugin(autoIncrement.plugin, {
     startAt: 1,
     incrementBy: 1
 });
+
+SubmissionSchema.methods.saveManual = function(submissionType) {
+    var submission = this;
+    return new Promise(function(resolve, reject) {
+        submissionType.save().then(function(){
+            submission.typeName = 'ManualSubmission';
+            submission.type = submissionType;
+            submission.save().then(function(doc) {
+                resolve(doc);
+            }).catch(function(reason) {
+                console.log('test');
+                reject(reason);
+            });
+        }).catch(function(reason) {
+            console.log('test');
+            reject(reason);
+        });
+    });
+};
 
 module.exports.Submission = mongoose.model('Submission', SubmissionSchema);
 module.exports.ManualSubmission = mongoose.model('ManualSubmission', ManualSubmissionSchema);
