@@ -15,47 +15,49 @@ var SubmissionSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    event: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Event',
-        default: null
-    },
     typeName: {
         type: String,
-        required: true
+        required: true,
+        enum: ['ManualSubmission', 'CompareSubmission', 'DockerSubmission']
     },
     type: {
-        manual: {
-            language: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Language'
-            },
-            code: {
-                type: String
-            },
-            approved: {
-                type: Boolean,
-                default: false
-            }
-        },
-        compare: {
-            output: {
-                type: String
-            }
-        },
-        docker: {
-            language: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Language'
-            },
-            code: {
-                type: String
-            }
-        }
+        type: mongoose.Schema.Types.ObjectId,
+        refPath: 'typeName',
+        required: true
     },
     createdAt: {
         type: Date,
         default: Date.now
+    }
+});
+
+var ManualSubmissionSchema = new mongoose.Schema({
+    language: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Language'
+    },
+    code: {
+        type: String
+    },
+    approved: {
+        type: Boolean,
+        default: false
+    }
+});
+
+var CompareSubmissionSchema = new mongoose.Schema({
+    output: {
+        type: String
+    }
+});
+
+var DockerSubmissionSchema = new mongoose.Schema({
+    language: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Language'
+    },
+    code: {
+        type: String
     }
 });
 
@@ -67,3 +69,6 @@ SubmissionSchema.plugin(autoIncrement.plugin, {
 });
 
 module.exports.Submission = mongoose.model('Submission', SubmissionSchema);
+module.exports.ManualSubmission = mongoose.model('ManualSubmission', ManualSubmissionSchema);
+module.exports.CompareSubmission = mongoose.model('CompareSubmission', CompareSubmissionSchema);
+module.exports.DockerSubmission = mongoose.model('DockerSubmission', DockerSubmissionSchema);
