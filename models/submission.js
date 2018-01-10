@@ -82,11 +82,9 @@ SubmissionSchema.methods.saveManual = function(submissionType) {
             submission.save().then(function(doc) {
                 resolve(doc);
             }).catch(function(reason) {
-                console.log('test');
                 reject(reason);
             });
         }).catch(function(reason) {
-            console.log('test');
             reject(reason);
         });
     });
