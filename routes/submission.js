@@ -16,7 +16,7 @@ router.get('/question/:id(\\d+)', auth.loggedin, function(req, res, next) {
 });
 
 router.post('/submit/:id(\\d+)', auth.loggedin, function(req, res, next) {
-    Question.find({qid: req.params.id}).then(function(question){
+    Question.findOne({qid: req.params.id}).then(function(question){
         if(_.isNull(question)) {
             res.redirect('/question/view/' + req.params.id);
         } else {

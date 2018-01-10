@@ -9,11 +9,13 @@ var SubmissionSchema = new mongoose.Schema({
     },
     question: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Question'
+        ref: 'Question',
+        required: true
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
     typeName: {
         type: String,
