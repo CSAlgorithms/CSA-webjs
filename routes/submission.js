@@ -49,8 +49,14 @@ router.post('/submit/:id(\\d+)', auth.loggedin, function(req, res, next) {
 });
 
 router.get('/pending', auth.admin, function(req, res, next) {
-    var me = res.getData('me');
-    Submission.find({'type.manual.approved': false}).populate('user').populate('question').then(function(submissions) {
+    ManualSubmission.find({'approved': false}).populate({
+        path: 'submission',
+        populate: [{
+            path: 'user'
+        },{
+            path: 'question'
+        }]
+    }).then(function(submissions) {
         res.addData('submissions', submissions);
         res.loadScript('dataTable');
         res.templateRender('submission/pending', 'Pending submissions');

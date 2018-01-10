@@ -16,11 +16,11 @@
                 <tbody>
                 {{# each submissions}}
                     <tr>
-                        <td>{{this.sid}}</td>
-                        <td><a href="/question/view/{{this.question.qid}}">{{this.question.title}}</a></td>
-                        <td>{{this.user.username}}</td>
-                        <td>{{this.createdAt}}</td>
-                        <td><a href="/submission/view/{{this.sid}}">view</a></td>
+                        <td>{{this.submission.sid}}</td>
+                        <td><a href="/question/view/{{this.submission.question.qid}}">{{this.submission.question.title}}</a></td>
+                        <td>{{this.submission.user.username}}</td>
+                        <td>{{this.submission.createdAt}}</td>
+                        <td><a href="/submission/view/{{this.submission.sid}}">view</a></td>
                     </tr>
                 {{/each}}
                 </tbody>

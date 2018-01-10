@@ -92,6 +92,13 @@ SubmissionSchema.methods.saveManual = function(submissionType) {
     });
 };
 
+ManualSubmissionSchema.virtual('submission', {
+    ref: 'Submission',
+    localField: '_id',
+    foreignField: 'type',
+    justOne: true
+});
+
 module.exports.Submission = mongoose.model('Submission', SubmissionSchema);
 module.exports.ManualSubmission = mongoose.model('ManualSubmission', ManualSubmissionSchema);
 module.exports.CompareSubmission = mongoose.model('CompareSubmission', CompareSubmissionSchema);
