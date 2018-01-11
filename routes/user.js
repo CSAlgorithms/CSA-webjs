@@ -3,6 +3,7 @@ var router = express.Router();
 var User = require('../models/user').User;
 var _ = require('lodash');
 var auth = require('../config/auth');
+var ActivityHelper = require('../helpers/ActivityHelper');
 
 router.get('/', auth.admin, function(req, res, next) {
     res.setPath([{name: 'User'},{name: 'List'}]);
@@ -69,9 +70,22 @@ router.post('/register', function (req, res) {
 });
 
 router.get('/profile/:id(\\d+)', function(req, res, next) {
-    User.findOne({uid: req.params.id}).then(function (user) {
+    User.findOne({uid: req.params.id}).populate({
+        path: 'activities',
+        options: {
+            limit: 10,
+            sort: {createdAt: -1}
+        },
+        populate: [{
+            path: 'object'
+        },{
+            path: 'user'
+        }]
+    }).then(function (user) {
         if(!_.isNull(user)) {
+            console.log(user);
             res.addData('user', user);
+            res.addData('activities', ActivityHelper.toHtmlArray(user.activities));
             res.setPath([{name: 'User'}, {name: user.username}]);
             res.getData('user')['fullname'] = user.fullname();
             res.loadScript('heatMap');

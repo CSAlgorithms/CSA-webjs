@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const constant = require('../config/constants').STATIC;
 
 var ActivitySchema = new mongoose.Schema({
     user: {
@@ -11,14 +12,19 @@ var ActivitySchema = new mongoose.Schema({
     },
     action: {
         type: String,
-        enum: ['add_question', 'submitted_question', '']
+        enum: [
+            constant.ACTIVITY_ADD_EVENT,
+            constant.ACTIVITY_ADD_QUESTION,
+            constant.ACTIVITY_SUBMIT_QUESTION,
+            constant.ACTIVITY_SOLVED_QUESTION
+        ]
     },
     objectType: {
         type: String
     },
     object: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'objectType'
+        refPath: 'objectType'
     },
     createdAt: {
         type: Date,
@@ -26,4 +32,4 @@ var ActivitySchema = new mongoose.Schema({
     }
 });
 
-module.exports.Event = mongoose.model('Activity', ActivitySchema);
+module.exports.Activity = mongoose.model('Activity', ActivitySchema);

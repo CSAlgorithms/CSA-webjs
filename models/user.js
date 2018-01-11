@@ -106,6 +106,12 @@ UserSchema.virtual('submissions', {
     foreignField: 'user'
 });
 
+UserSchema.virtual('activities', {
+    ref: 'Activity',
+    localField: '_id',
+    foreignField: 'user'
+});
+
 UserSchema.pre('save', function(next){
     var user = this;
     if(user.isModified('password')) {

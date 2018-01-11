@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const autoIncrement = require('mongoose-auto-increment');
+const Activity = require('./activity').Activity;
+const constant = require('../config/constants').STATIC;
 
 var SubmissionSchema = new mongoose.Schema({
     sid: {
@@ -75,13 +77,34 @@ SubmissionSchema.plugin(autoIncrement.plugin, {
     incrementBy: 1
 });
 
+SubmissionSchema.methods.Save = function() {
+    var submission = this;
+    return new Promise(function(resolve, reject) {
+        submission.save().then(function(doc) {
+            var activity = new Activity({
+                user: submission.user,
+                action: constant.ACTIVITY_SUBMIT_QUESTION,
+                objectType: 'Question',
+                object: doc.question
+            });
+            activity.save().then(function(){
+                resolve(doc);
+            }).catch(function(reason) {
+                reject(reason);
+            });
+        }).catch(function(reason) {
+            reject(reason);
+        });
+    });
+};
+
 SubmissionSchema.methods.saveManual = function(submissionType) {
     var submission = this;
     return new Promise(function(resolve, reject) {
         submissionType.save().then(function(){
             submission.typeName = 'ManualSubmission';
             submission.type = submissionType;
-            submission.save().then(function(doc) {
+            submission.Save().then(function(doc) {
                 resolve(doc);
             }).catch(function(reason) {
                 reject(reason);
