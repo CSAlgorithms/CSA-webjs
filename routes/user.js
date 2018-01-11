@@ -20,9 +20,12 @@ router.get('/guest', function(req, res, next) {
 });
 
 router.get('/leaderboard', function(req, res, next) {
-    res.setPath([{name: 'User'},{name: 'Leaderboard'}]);
-    res.loadScript('dataTable');
-    res.templateRender('user/leaderboard', 'Leaderboard');
+    User.find({}).sort({'score': -1}).limit(100).then(function(users) {
+        res.addData('users', users);
+        res.setPath([{name: 'User'},{name: 'Leaderboard'}]);
+        res.loadScript('dataTable');
+        res.templateRender('user/leaderboard', 'Leaderboard');
+    });
 });
 
 router.get('/reset', function(req, res, next) {
@@ -83,7 +86,6 @@ router.get('/profile/:id(\\d+)', function(req, res, next) {
         }]
     }).then(function (user) {
         if(!_.isNull(user)) {
-            console.log(user);
             res.addData('user', user);
             res.addData('activities', ActivityHelper.toHtmlArray(user.activities));
             res.setPath([{name: 'User'}, {name: user.username}]);
@@ -126,7 +128,11 @@ router.post('/edit/:id(\\d+)', auth.loggedin, function(req, res, next) {
     }
 
     var postArray = ['email', 'password', 'firstName', 'lastName'];
-    if(me.admin) postArray.push('admin');
+    if(me.admin){
+        postArray.push('username');
+        postArray.push('admin');
+        postArray.push('score');
+    }
     var body = _.pick(req.body, postArray);
     if(_.isEmpty(body.password)) delete body.password;
 

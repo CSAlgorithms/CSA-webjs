@@ -52,6 +52,11 @@ var UserSchema = new mongoose.Schema({
         required: true,
         default: false
     },
+    score: {
+        type: Number,
+        default: 0,
+        required: true
+    },
     createdAt: {
         type: Date,
         default: Date.now

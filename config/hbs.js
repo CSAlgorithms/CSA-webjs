@@ -23,3 +23,7 @@ Handlebars.registerHelper('equals', function (a, b, options) {
     }
     return '';
 });
+
+Handlebars.registerHelper('inc', function (a) {
+    return a+1;
+});

@@ -10,16 +10,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>first_user</td>
-                    <td>121</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>second_user</td>
-                    <td>151</td>
-                </tr>
+                {{# each users}}
+                    <tr>
+                        <td>{{inc @index}}</td>
+                        <td>{{this.username}}</td>
+                        <td>{{this.score}}</td>
+                    </tr>
+                {{/each}}
                 </tbody>
             </table>
         </div>
