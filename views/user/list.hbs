@@ -7,6 +7,7 @@
                     <th width="100">ID</th>
                     <th>Username</th>
                     <th width="100"></th>
+                    <th width="100"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -14,6 +15,7 @@
                     <tr>
                         <td>{{this.uid}}</td>
                         <td>{{this.username}}</td>
+                        <td><a href="/user/edit/{{this.uid}}">edit</a></td>
                         <td><a href="/user/profile/{{this.uid}}">view</a></td>
                     </tr>
                 {{/each}}
