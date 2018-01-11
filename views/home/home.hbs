@@ -4,9 +4,9 @@
         <div class="row" style="margin-top: 20px">
             <div class="col-12">
                 <ul class="list-group">
-                    <li class="list-group-item">New question #10 added <span class="float-right small">10:50</span></li>
-                    <li class="list-group-item">New event #1 added <span class="float-right small">10:30</span></li>
-                    <li class="list-group-item">Website installed <span class="float-right small">1 day ago</span></li>
+                    {{# each activities}}
+                        <li class="list-group-item">{{{this}}}</li>
+                    {{/each}}
                 </ul>
             </div>
         </div>
