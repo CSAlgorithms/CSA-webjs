@@ -17,8 +17,40 @@
             </div>
 
             <div class="col-12 editor-btn">
-                <button class="btn btn-primary">Approve</button>
+                {{#if submission.type.approved}}
+                    <button onclick="return reject(this)" class="btn btn-primary">Reject</button>
+                {{else}}
+                    <button onclick="return accept(this)" class="btn btn-primary">Approve</button>
+                {{/if}}
             </div>
         {{/equals}}
     </div>
 </div>
+<script>
+    function accept(dom) {
+        $.post( "/ajax/submission/accept", {s_id: "{{submission.type._id}}", type: "{{submissionType}}" })
+                .done(function( data ) {
+                    if(data.code === 200) {
+                        dom.innerText = 'Reject';
+                        dom.onclick = function() { return reject(dom);};
+                    } else {
+                        console.error('Error accepting submission');
+                    }
+                });
+        return false;
+    }
+
+    function reject(dom) {
+        $.post( "/ajax/submission/reject", {s_id: "{{submission.type._id}}", type: "{{submissionType}}" })
+                .done(function( data ) {
+                    if(data.code === 200) {
+                        dom.innerText = 'Accept';
+                        dom.onclick = function() { return accept(dom);};
+                    } else {
+                        console.error('Error rejecting submission');
+                    }
+                });
+        return false;
+
+    }
+</script>

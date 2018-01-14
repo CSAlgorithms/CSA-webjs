@@ -30,6 +30,7 @@ var submission = require('./routes/submission');
 var admin = require('./routes/admin');
 var language = require('./routes/language');
 var ajaxEvent = require('./routes/ajax/event');
+var ajaxSubmission = require('./routes/ajax/submission');
 
 // Express app
 var app = express();
@@ -83,6 +84,7 @@ app.use('/submission', submission);
 app.use('/admin', admin);
 app.use('/language', language);
 app.use('/ajax/event', ajaxEvent);
+app.use('/ajax/submission', ajaxSubmission);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
