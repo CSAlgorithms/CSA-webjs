@@ -1,0 +1,24 @@
+<div class="card">
+    <div class="card-body">
+        <h3 class="card-title"><b>Submission:</b> {{submission.question.qid}} - {{submission.question.title}}</h3>
+        <div class="row">
+            <div class="col-12">
+                <a href="/question/view/{{submission.question.qid}}"><li class="fa fa-eye"></li> view question</a>
+            </div>
+        </div>
+
+        {{# equals submissionType g_constant.SUBMIT_TYPE_MANUAL}}
+            <div style="padding-top: 20px">
+                <h4>Manual submission</h4>
+                <p>Language: <b>{{submission.type.language.displayName}}</b></p>
+                <div class="col-12 editor-container">
+                    <div id="editor">{{submission.type.code}}</div>
+                </div>
+            </div>
+
+            <div class="col-12 editor-btn">
+                <button class="btn btn-primary">Approve</button>
+            </div>
+        {{/equals}}
+    </div>
+</div>
