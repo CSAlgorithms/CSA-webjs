@@ -1,7 +1,6 @@
 <div class="card mb-3">
     <div class="card-body">
         <h3 class="card-title">Pending submissions</h3>
-        <h5 class="card-title"><em>Only submissions of type MANUAL are listed in this page</em></h5>
         <div class="table-responsive">
             <table class="table table-bordered dataTable" width="100%" cellspacing="0">
                 <thead>
@@ -10,17 +9,19 @@
                     <th>Question</th>
                     <th>User</th>
                     <th>Date</th>
+                    <th>Type name</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 {{# each submissions}}
                     <tr>
-                        <td>{{this.submission.sid}}</td>
-                        <td><a href="/question/view/{{this.submission.question.qid}}">{{this.submission.question.title}}</a></td>
-                        <td>{{this.submission.user.username}}</td>
-                        <td>{{this.submission.createdAt}}</td>
-                        <td><a href="/submission/view/{{this.submission.sid}}">view</a></td>
+                        <td>{{this.sid}}</td>
+                        <td><a href="/question/view/{{this.question.qid}}">{{this.question.title}}</a></td>
+                        <td>{{this.user.username}}</td>
+                        <td>{{this.createdAt}}</td>
+                        <td>{{this.getTypeName}}</td>
+                        <td><a href="/submission/view/{{this.sid}}">view</a></td>
                     </tr>
                 {{/each}}
                 </tbody>

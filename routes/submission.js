@@ -52,22 +52,16 @@ router.post('/submit/:id(\\d+)', auth.loggedin, function(req, res, next) {
 });
 
 router.get('/pending', auth.admin, function(req, res, next) {
-    ManualSubmission.find({'approved': false}).populate({
-        path: 'submission',
-        populate: [{
-            path: 'user'
-        },{
-            path: 'question'
-        }]
-    }).then(function(submissions) {
-        res.addData('submissions', submissions);
-        res.loadScript('dataTable');
-        res.templateRender('submission/pending', 'Pending submissions');
+    Submission.find({'accepted': false})
+        .populate('user').populate('question').populate('type').then(function(submissions) {
+            res.addData('submissions', submissions);
+            res.loadScript('dataTable');
+            res.templateRender('submission/pending', 'Pending submissions');
     });
 });
 
 router.get('/view/:id(\\d+)', auth.admin, function(req, res, next) {
-    Submission.findOne({sid: req.params.id}).populate('question').populate({
+    Submission.findOne({sid: req.params.id}).populate('user').populate('question').populate({
         path: 'type',
         populate: {
             path: 'language'

@@ -3,7 +3,9 @@
         <h3 class="card-title"><b>Submission:</b> {{submission.question.qid}} - {{submission.question.title}}</h3>
         <div class="row">
             <div class="col-12">
-                <a href="/question/view/{{submission.question.qid}}"><li class="fa fa-eye"></li> view question</a>
+                By <a href="/user/profile/{{submission.user.uid}}">{{submission.user.username}}</a>
+                - {{submission.createdAt}}
+                - <a href="/question/view/{{submission.question.qid}}"><li class="fa fa-eye"></li> view question</a>
             </div>
         </div>
 
@@ -17,10 +19,10 @@
             </div>
 
             <div class="col-12 editor-btn">
-                {{#if submission.type.approved}}
+                {{#if submission.accepted}}
                     <button onclick="return reject(this)" class="btn btn-primary">Reject</button>
                 {{else}}
-                    <button onclick="return accept(this)" class="btn btn-primary">Approve</button>
+                    <button onclick="return accept(this)" class="btn btn-primary">Accept</button>
                 {{/if}}
             </div>
         {{/equals}}
@@ -28,7 +30,7 @@
 </div>
 <script>
     function accept(dom) {
-        $.post( "/ajax/submission/accept", {s_id: "{{submission.type._id}}", type: "{{submissionType}}" })
+        $.post( "/ajax/submission/accept", {s_id: "{{submission._id}}" })
                 .done(function( data ) {
                     if(data.code === 200) {
                         dom.innerText = 'Reject';
@@ -41,7 +43,7 @@
     }
 
     function reject(dom) {
-        $.post( "/ajax/submission/reject", {s_id: "{{submission.type._id}}", type: "{{submissionType}}" })
+        $.post( "/ajax/submission/reject", {s_id: "{{submission._id}}" })
                 .done(function( data ) {
                     if(data.code === 200) {
                         dom.innerText = 'Accept';

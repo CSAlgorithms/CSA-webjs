@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const autoIncrement = require('mongoose-auto-increment');
 const Activity = require('./activity').Activity;
 const constant = require('../config/constants').STATIC;
+const _ = require('lodash');
 
 var SubmissionSchema = new mongoose.Schema({
     sid: {
@@ -29,6 +30,10 @@ var SubmissionSchema = new mongoose.Schema({
         refPath: 'typeName',
         required: true
     },
+    accepted: {
+        type: Boolean,
+        required: true
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -44,10 +49,6 @@ var ManualSubmissionSchema = new mongoose.Schema({
     code: {
         type: String,
         required: true
-    },
-    approved: {
-        type: Boolean,
-        default: false
     }
 });
 
@@ -104,6 +105,7 @@ SubmissionSchema.methods.saveManual = function(submissionType) {
         submissionType.save().then(function(){
             submission.typeName = 'ManualSubmission';
             submission.type = submissionType;
+            submission.accepted = false;
             submission.Save().then(function(doc) {
                 resolve(doc);
             }).catch(function(reason) {
@@ -113,6 +115,19 @@ SubmissionSchema.methods.saveManual = function(submissionType) {
             reject(reason);
         });
     });
+};
+
+SubmissionSchema.methods.getTypeName = function() {
+    switch (this.typeName) {
+        case 'ManualSubmission':
+            return constant.SUBMIT_TYPE_MANUAL;
+        case 'CompareSubmission':
+            return constant.SUBMIT_TYPE_COMPARE;
+        case 'DockerSubmission':
+            return constant.SUBMIT_TYPE_DOCKER;
+        default:
+            throw new Error('Type name is undefined');
+    }
 };
 
 ManualSubmissionSchema.virtual('submission', {
