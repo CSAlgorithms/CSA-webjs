@@ -131,7 +131,6 @@ router.post('/edit/:id(\\d+)', auth.loggedin, function(req, res, next) {
     if(me.admin){
         postArray.push('username');
         postArray.push('admin');
-        postArray.push('score');
     }
     var body = _.pick(req.body, postArray);
     if(_.isEmpty(body.password)) delete body.password;
