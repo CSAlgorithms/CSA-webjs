@@ -73,6 +73,21 @@ UserSchema.methods.fullname = function() {
     }
 };
 
+UserSchema.methods.refreshScore = function() {
+    var user = this;
+    var Submission = require('./submission').Submission;
+    Submission.find({user: user._id, accepted: true}).distinct('question').then(function(questionsIDs) {
+        var Question = require('./question').Question;
+        Question.find({_id: {$in: questionsIDs}}).then(function(questions) {
+            user.score = 0;
+            for(var i=0; i < questions.length; i++) {
+                user.score += questions[i].score;
+            }
+            user.save();
+        })
+    });
+};
+
 UserSchema.statics.findByCredentials = function(username, password) {
     var User = this;
     return User.findOne({username: username}).then(function(user) {

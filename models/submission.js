@@ -130,6 +130,13 @@ SubmissionSchema.methods.getTypeName = function() {
     }
 };
 
+SubmissionSchema.post('findOneAndUpdate', function(doc) {
+    var User = require('./user').User;
+    User.findById(doc.user).then(function(user) {
+        user.refreshScore();
+    });
+});
+
 ManualSubmissionSchema.virtual('submission', {
     ref: 'Submission',
     localField: '_id',
