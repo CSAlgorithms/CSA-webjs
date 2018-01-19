@@ -24,12 +24,14 @@
         <script type="text/javascript" src="/js/cal-heatmap.min.js"></script>
         <script type="text/javascript">
             var cal = new CalHeatMap();
+            var start = new Date();
+            start = start.setDate(start.getDate() - 330);
             cal.init({
                 itemSelector: '#cal-heatmap',
                 domain: "month",
                 subDomain: "day",
-                data: '{{heatmap_data}}',
-                start: new Date(2000, 0),
+                data: '{{calheatmap_data}}',
+                start: start,
                 domainGutter: 5,
                 itemName: "submitted question",
                 cellSize: 11,

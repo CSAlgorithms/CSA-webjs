@@ -87,6 +87,7 @@ router.get('/profile/:id(\\d+)', function(req, res, next) {
     }).then(function (user) {
         if(!_.isNull(user)) {
             res.addData('user', user);
+            res.addData('calheatmap_data', '/submission/json/' + user._id);
             res.addData('activities', ActivityHelper.toHtmlArray(user.activities));
             res.setPath([{name: 'User'}, {name: user.username}]);
             res.getData('user')['fullname'] = user.fullname();

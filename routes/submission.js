@@ -84,4 +84,23 @@ router.get('/view/:id(\\d+)', auth.admin, function(req, res, next) {
     });
 });
 
+router.get('/json/:id', function(req, res, next) {
+    var data = {};
+    Submission.find({user: req.params.id}).then(function(submissions){
+        if(_.isNull(submissions)) {
+            res.json(data);
+        } else {
+            for(var i=0; i < submissions.length; i++) {
+                var key = Math.round(submissions[i].createdAt.getTime() / 1000) + '';
+                if(key in data) {
+                    data[key] += 1;
+                } else {
+                    data[key] = 1;
+                }
+            }
+            res.json(data);
+        }
+    });
+});
+
 module.exports = router;
