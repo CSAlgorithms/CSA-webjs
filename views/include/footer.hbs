@@ -25,14 +25,10 @@
         <script type="text/javascript">
             var cal = new CalHeatMap();
             cal.init({
-                itemSelector: "#cal-heatmap",
+                itemSelector: '#cal-heatmap',
                 domain: "month",
                 subDomain: "day",
-                data: {
-                    946702811: 15,
-                    946813892: 25,
-                    947702813: 10
-                },
+                data: '{{heatmap_data}}',
                 start: new Date(2000, 0),
                 domainGutter: 5,
                 itemName: "submitted question",
